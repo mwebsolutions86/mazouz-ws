@@ -6,6 +6,7 @@ import { ArrowRight, Globe, Smartphone, Brain, Cpu, Code, Layers, Zap, Search, P
 import Link from 'next/link';
 import Image from 'next/image';
 import Background3D from '@/app/components/3d/Background3D';
+//import { useTranslations } from 'next-intl';
 
 // --- PARALLAXE ---
 interface ParallaxProps {

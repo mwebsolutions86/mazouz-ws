@@ -6,6 +6,7 @@ import Navbar from "@/app/components/ui/Navbar";
 import Footer from "@/app/components/ui/Footer";
 import "../globals.css";
 
+
 export const metadata: Metadata = {
   title: "MazouzWS - Digital Forge",
   description: "Agence de développement web et mobile futuriste.",

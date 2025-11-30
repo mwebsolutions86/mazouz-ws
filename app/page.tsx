@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
- 
+
 // Ce composant va chercher la langue préférée de l'utilisateur ou choisir 'fr'
 // et le rediriger vers /fr ou /en.
 export default function IndexPage() {

@@ -3,11 +3,10 @@
 import React, { useState } from 'react';
 import Background3D from '@/app/components/3d/Background3D';
 import { HorizontalParallax } from '@/app/components/ui/Parallax';
-import { Check, Key, RefreshCcw, Settings, ArrowRight, ShieldCheck, Zap, Database, MessageCircle, CreditCard, FileSignature, PenTool, Rocket, Lock, Lightbulb, Search, Code } from 'lucide-react';
+import { Check, Key, RefreshCcw, Settings, ShieldCheck, Zap, Database, MessageCircle, CreditCard, FileSignature, PenTool, Rocket, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
 
-// --- DÉFINITION DES TYPES (CORRIGÉE) ---
+// --- DÉFINITION DES TYPES ---
 interface OfferType {
   title: string;
   price: string;
@@ -18,8 +17,8 @@ interface OfferType {
   features: string[];
   cta: string;
   highlight: boolean;
-  setup?: string;  // Optionnel : Frais d'entrée (Abonnement)
-  detail?: string; // Optionnel : Détail supplémentaire
+  setup?: string;
+  detail?: string;
 }
 
 // --- DONNÉES DES OFFRES ---
@@ -128,47 +127,10 @@ const subscriptionData: OfferType[] = [
   }
 ];
 
-// Fusion des données pour l'affichage conditionnel
 const pricingData = {
   acquisition: acquisitionData,
   subscription: subscriptionData
 };
-
-// --- DONNÉES DU PARCOURS PROJET (NOUVEAU) ---
-const journeySteps = [
-  {
-    id: "01",
-    title: "SYNC & STRATEGY",
-    desc: "Appel de découverte (Visio ou Tel). Nous définissons vos objectifs, votre cible et verrouillons le cahier des charges.",
-    icon: Search,
-    color: "text-blue-400",
-    border: "border-blue-500/50"
-  },
-  {
-    id: "02",
-    title: "DESIGN BLUEPRINT",
-    desc: "Conception des maquettes et de l'architecture. Vous validez le visuel avant que la moindre ligne de code ne soit écrite.",
-    icon: PenTool,
-    color: "text-purple-400",
-    border: "border-purple-500/50"
-  },
-  {
-    id: "03",
-    title: "CODE FORGE",
-    desc: "Phase de développement intensif. Intégration du contenu, optimisation SEO et tests de performance sur serveurs de pré-production.",
-    icon: Code,
-    color: "text-cyan-400",
-    border: "border-cyan-500/50"
-  },
-  {
-    id: "04",
-    title: "IGNITION (LAUNCH)",
-    desc: "Mise en ligne officielle. Indexation Google immédiate. Remise des clés (Accès Admin) et formation à l'utilisation.",
-    icon: Rocket,
-    color: "text-green-400",
-    border: "border-green-500/50"
-  }
-];
 
 export default function OffresPage() {
   const [mode, setMode] = useState<'acquisition' | 'subscription'>('acquisition');
@@ -301,7 +263,7 @@ export default function OffresPage() {
             </AnimatePresence>
         </div>
 
-        {/* SECTION PROTOCOLE FINANCIER (PAIEMENT) */}
+        {/* --- NOUVELLE SECTION : PROTOCOLE FINANCIER --- */}
         <div className="mb-32">
              <div className="text-center mb-12">
                  <HorizontalParallax direction={1} speed={20}>
@@ -313,7 +275,7 @@ export default function OffresPage() {
 
              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                  
-                 {/* MODE PROJET */}
+                 {/* MODE PROJET (Achat & Sur Mesure) */}
                  <div className="p-8 rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.02] to-transparent relative overflow-hidden">
                     <div className="absolute top-0 right-0 px-4 py-2 bg-white/5 text-[10px] font-bold text-gray-400 rounded-bl-2xl uppercase tracking-widest">
                         Acquisition & Sur Mesure
@@ -322,8 +284,10 @@ export default function OffresPage() {
                     <h3 className="text-xl font-bold text-white mb-8 mt-4">ÉCHELONNEMENT STRATÉGIQUE</h3>
                     
                     <div className="space-y-6 relative">
+                        {/* Ligne connectrice */}
                         <div className="absolute left-[19px] top-2 bottom-2 w-[2px] bg-white/10 z-0"></div>
 
+                        {/* Étape 1 */}
                         <div className="flex items-start gap-4 relative z-10">
                             <div className="w-10 h-10 rounded-full bg-black border border-cyan-500/50 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
                                 <FileSignature size={18} className="text-cyan-400" />
@@ -337,6 +301,7 @@ export default function OffresPage() {
                             </div>
                         </div>
 
+                        {/* Étape 2 */}
                         <div className="flex items-start gap-4 relative z-10">
                             <div className="w-10 h-10 rounded-full bg-black border border-purple-500/50 flex items-center justify-center shrink-0">
                                 <PenTool size={18} className="text-purple-400" />
@@ -350,6 +315,7 @@ export default function OffresPage() {
                             </div>
                         </div>
 
+                        {/* Étape 3 */}
                         <div className="flex items-start gap-4 relative z-10">
                             <div className="w-10 h-10 rounded-full bg-black border border-green-500/50 flex items-center justify-center shrink-0">
                                 <Rocket size={18} className="text-green-400" />
@@ -394,42 +360,6 @@ export default function OffresPage() {
                  </div>
 
              </div>
-        </div>
-
-        {/* NOUVELLE SECTION : TRAJECTOIRE DE DÉPLOIEMENT (JOURNEY) */}
-        <div className="mb-32">
-            <div className="text-center mb-16">
-                 <HorizontalParallax direction={-1} speed={30}>
-                    <h2 className="text-2xl md:text-4xl font-black text-white">TRAJECTOIRE DE <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">DÉPLOIEMENT</span></h2>
-                 </HorizontalParallax>
-            </div>
-
-            <div className="relative">
-                {/* Ligne centrale desktop */}
-                <div className="absolute top-1/2 left-0 w-full h-1 bg-white/5 -translate-y-1/2 hidden md:block rounded-full"></div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    {journeySteps.map((step, idx) => (
-                        <motion.div 
-                            key={idx}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.2 }}
-                            className={`group relative p-6 rounded-2xl border bg-black/80 backdrop-blur-md z-10 hover:-translate-y-2 transition-transform duration-300 ${step.border} border-opacity-30 hover:border-opacity-80`}
-                        >
-                            <div className={`absolute -top-3 left-6 px-2 bg-black text-[10px] font-black ${step.color} tracking-widest border border-white/10 rounded`}>
-                                STEP {step.id}
-                            </div>
-                            <div className={`w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-4 ${step.color}`}>
-                                <step.icon size={24} />
-                            </div>
-                            <h4 className="text-lg font-bold text-white mb-2">{step.title}</h4>
-                            <p className="text-xs text-gray-400 leading-relaxed">{step.desc}</p>
-                        </motion.div>
-                    ))}
-                </div>
-            </div>
         </div>
 
         {/* SECTION RASSURANCE */}
