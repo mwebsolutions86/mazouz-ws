@@ -7,138 +7,15 @@ import { Zap, Trophy, Crosshair, Terminal, Globe, ChevronRight, User, Lock,  } f
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl'; // <--- 1. IMPORT
 
-// CODE QUI DÉFILE DANS LE TERMINAL
-const codeSnippets = [
-  "> INITIALIZING NEURAL LINK...",
-  "> ACCESSING CORE ARCHITECTURE [V.15.0.2]",
-  "> LOADING MODULE: NEXT.JS... [OK]",
-  "> OPTIMIZING ASSETS... [100%]",
-  "> DEPLOYING TO EDGE NETWORK...",
-  "> SYSTEM CHECK: SECURE",
-  "> RENDER MODE: CONCURRENT",
-  "> HYDRATION: COMPLETE",
-  "> ESTABLISHING SECURE CONNECTION...",
-  "> USER DETECTED: ELITE STATUS",
-  "> EXECUTING: build_future.tsx",
-  "> COMPILING SHADERS...",
-  "> ONE_MAN_ARMY_PROTOCOL: ACTIVE",
-];
+// ... (Gardez le composant CyberTerminal et SpotlightValueCard inchangés) ...
+// Pour gagner de la place, je ne remets pas tout le code du Terminal ici car il contient du "code"
+// qui peut rester en anglais (c'est stylistique).
 
-// COMPOSANT TERMINAL
-const CyberTerminal = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [lines, setLines] = useState<string[]>([]);
+// ... (Gardez SpotlightValueCard tel quel) ...
 
-  useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      setLines(prev => {
-        const newLine = codeSnippets[index % codeSnippets.length];
-        const newLines = [...prev, newLine].slice(-12); 
-        return newLines;
-      });
-      index++;
-    }, 400); 
-
-    return () => clearInterval(interval);
-  }, []); 
-
-  return (
-    <div 
-      ref={containerRef}
-      className="relative w-full h-[450px] bg-black/80 rounded-xl border border-white/10 overflow-hidden font-mono text-xs md:text-sm shadow-2xl group"
-    >
-      <div className="absolute top-0 left-0 w-full h-10 bg-white/5 border-b border-white/10 flex items-center justify-between px-4 z-20">
-        <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-500/50" />
-          <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-          <div className="w-3 h-3 rounded-full bg-green-500/50" />
-        </div>
-        <div className="text-gray-500 flex items-center gap-2">
-          <Lock size={12} />
-          <span>MAZOUZ_ROOT_ACCESS</span>
-        </div>
-      </div>
-
-      <div className="absolute inset-0 pt-14 px-6 pb-6 flex flex-col justify-end z-10">
-        <div className="space-y-2 text-green-400/80">
-          {lines.map((line, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-2"
-            >
-              <span className="text-cyan-500">➜</span>
-              <span className={line.includes("ERROR") ? "text-red-500" : line.includes("ACTIVE") ? "text-yellow-400 font-bold" : ""}>
-                {line} {i === lines.length - 1 && <span className="animate-pulse">_</span>}
-              </span>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-30 bg-[length:100%_2px,3px_100%] pointer-events-none" />
-      <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-      <div className="absolute top-0 w-full h-1 bg-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.5)] animate-[scan_4s_linear_infinite] z-40 opacity-50" />
-    </div>
-  );
-};
-
-// DONNÉES ÉQUIPE
-const team = [
-  {
-    name: "MOHCINE MAZOUZ",
-    role: "FOUNDER / FULL STACK ARCHITECT",
-    bio: "L'architecte unique derrière vos projets. Je ne suis pas seulement un développeur, je suis votre partenaire stratégique. De la première ligne de code au déploiement final, je garantis une vision unifiée et une exécution sans friction. Pas d'intermédiaires, juste de l'excellence.",
-    stats: ["CLASS: ONE-MAN ARMY", "WEAPON: FULL STACK", "STATUS: ONLINE"],
-    image: "/quantum.webp" 
-  }
-];
-
-// DONNÉES VALEURS
-const values = [
-  {
-    icon: User,
-    title: "INTERLOCUTEUR UNIQUE",
-    desc: "Fini le téléphone arabe. Vous parlez directement à celui qui construit. Zéro perte d'information, réactivité maximale."
-  },
-  {
-    icon: Crosshair,
-    title: "PRÉCISION D'ORFÈVRE",
-    desc: "En maîtrisant 100% de la chaîne, je garantis une cohérence totale. Le design sert le code, le code sert la performance."
-  },
-  {
-    icon: Zap,
-    title: "AGILITÉ RADICALE",
-    desc: "Une structure légère signifie des décisions rapides. Pas de réunions interminables. Nous avançons par itérations rapides."
-  }
-];
-
-// DONNÉES CHRONOLOGIE
-const history = [
-  { 
-    year: "2023", 
-    title: "INITIALISATION", 
-    desc: "Lancement de l'activité. Une conviction : l'avenir appartient aux experts polyvalents capables de fusionner design et ingénierie." 
-  },
-  { 
-    year: "2024", 
-    title: "DÉVELOPPEMENT", 
-    desc: "Livraison de projets complexes pour des clients exigeants. Perfectionnement de la stack technique pour atteindre des standards d'élite." 
-  },
-  { 
-    year: "2025", 
-    title: "MATURITÉ", 
-    desc: "MazouzWS devient une référence locale en développement sur-mesure. Une approche 'Boutique Agency' axée sur la qualité." 
-  }
-];
-
-// DONNÉES STACK
-const stack = ["NEXT.JS", "REACT NATIVE", "TYPESCRIPT", "PYTHON", "RUST", "SUPABASE", "AWS", "WEBGL", "SOLIDITY"];
-
-// COMPOSANT CARTE SPOTLIGHT (VALEURS)
+// ATTENTION : Pour SpotlightValueCard, il faut le définir avant le composant page
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function SpotlightValueCard({ value, index }: { value: any, index: number }) {
   const mouseX = useMotionValue(0);
@@ -185,61 +62,163 @@ function SpotlightValueCard({ value, index }: { value: any, index: number }) {
   );
 }
 
+// ... (Code Snippets et Terminal à conserver tel quel ou déplacer en bas) ...
+const codeSnippets = [
+  "> INITIALIZING NEURAL LINK...",
+  "> ACCESSING CORE ARCHITECTURE [V.15.0.2]",
+  "> LOADING MODULE: NEXT.JS... [OK]",
+  "> OPTIMIZING ASSETS... [100%]",
+  "> DEPLOYING TO EDGE NETWORK...",
+  "> SYSTEM CHECK: SECURE",
+  "> RENDER MODE: CONCURRENT",
+  "> HYDRATION: COMPLETE",
+  "> ESTABLISHING SECURE CONNECTION...",
+  "> USER DETECTED: ELITE STATUS",
+  "> EXECUTING: build_future.tsx",
+  "> COMPILING SHADERS...",
+  "> ONE_MAN_ARMY_PROTOCOL: ACTIVE",
+];
+
+const CyberTerminal = () => {
+    // ... (Gardez le code du composant CyberTerminal identique à votre fichier original)
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [lines, setLines] = useState<string[]>([]);
+  
+    useEffect(() => {
+      let index = 0;
+      const interval = setInterval(() => {
+        setLines(prev => {
+          const newLine = codeSnippets[index % codeSnippets.length];
+          const newLines = [...prev, newLine].slice(-12); 
+          return newLines;
+        });
+        index++;
+      }, 400); 
+  
+      return () => clearInterval(interval);
+    }, []); 
+  
+    return (
+      <div 
+        ref={containerRef}
+        className="relative w-full h-[450px] bg-black/80 rounded-xl border border-white/10 overflow-hidden font-mono text-xs md:text-sm shadow-2xl group"
+      >
+        <div className="absolute top-0 left-0 w-full h-10 bg-white/5 border-b border-white/10 flex items-center justify-between px-4 z-20">
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-red-500/50" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+            <div className="w-3 h-3 rounded-full bg-green-500/50" />
+          </div>
+          <div className="text-gray-500 flex items-center gap-2">
+            <Lock size={12} />
+            <span>MAZOUZ_ROOT_ACCESS</span>
+          </div>
+        </div>
+  
+        <div className="absolute inset-0 pt-14 px-6 pb-6 flex flex-col justify-end z-10">
+          <div className="space-y-2 text-green-400/80">
+            {lines.map((line, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="flex items-center gap-2"
+              >
+                <span className="text-cyan-500">➜</span>
+                <span className={line.includes("ERROR") ? "text-red-500" : line.includes("ACTIVE") ? "text-yellow-400 font-bold" : ""}>
+                  {line} {i === lines.length - 1 && <span className="animate-pulse">_</span>}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+  
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-30 bg-[length:100%_2px,3px_100%] pointer-events-none" />
+        <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        <div className="absolute top-0 w-full h-1 bg-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.5)] animate-[scan_4s_linear_infinite] z-40 opacity-50" />
+      </div>
+    );
+};
+
 export default function AgencePage() {
+  const t = useTranslations('AgencePage'); // <--- 2. CHARGEMENT TRADUCTIONS
+
+  // DONNÉES RECONSTRUITES AVEC LES TRADUCTIONS
+  const history = [
+    { year: "2023", title: t('history_2023_title'), desc: t('history_2023_desc') },
+    { year: "2024", title: t('history_2024_title'), desc: t('history_2024_desc') },
+    { year: "2025", title: t('history_2025_title'), desc: t('history_2025_desc') }
+  ];
+
+  const values = [
+    { icon: User, title: t('val_1_title'), desc: t('val_1_desc') },
+    { icon: Crosshair, title: t('val_2_title'), desc: t('val_2_desc') },
+    { icon: Zap, title: t('val_3_title'), desc: t('val_3_desc') }
+  ];
+
+  const team = [
+    {
+      name: "MOHCINE MAZOUZ",
+      role: "FOUNDER / FULL STACK ARCHITECT",
+      bio: t('bio'), // Utilisation de la traduction
+      stats: ["CLASS: ONE-MAN ARMY", "WEAPON: FULL STACK", "STATUS: ONLINE"],
+      image: "/quantum.webp" 
+    }
+  ];
+
+  // DONNÉES STACK (Inchangé car c'est du technique universel)
+  const stack = ["NEXT.JS", "REACT NATIVE", "TYPESCRIPT", "PYTHON", "RUST", "SUPABASE", "AWS", "WEBGL", "SOLIDITY"];
+
   return (
     <div className="relative min-h-screen bg-[#050505] text-white pt-28 md:pt-32 px-4 md:px-6 overflow-x-hidden selection:bg-cyan-500 selection:text-black">
       <Background3D />
       
       <div className="max-w-7xl mx-auto relative z-10 pb-20">
         
-        {/* HEADER CORRIGÉ POUR MOBILE */}
+        {/* HEADER */}
         <div className="mb-20 md:mb-32 text-center">
             <HorizontalParallax direction={-1} speed={30}>
-                <h2 className="text-cyan-500 text-[10px] md:text-xs font-bold tracking-[0.3em] md:tracking-[0.5em] mb-4 uppercase">Identité & Origine</h2>
+                <h2 className="text-cyan-500 text-[10px] md:text-xs font-bold tracking-[0.3em] md:tracking-[0.5em] mb-4 uppercase">{t('subtitle')}</h2>
             </HorizontalParallax>
             
-            <HorizontalParallax direction={1} speed={40}> {/* Vitesse réduite pour éviter le débordement */}
+            <HorizontalParallax direction={1} speed={40}>
                 <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white leading-none flex flex-col md:block items-center justify-center gap-2 md:gap-0">
-                    <span>L&apos;AGENCE</span>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 md:ml-4">MAZOUZ</span>
+                    <span>{t('title_1')}</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 md:ml-4">{t('title_2')}</span>
                 </h1>
             </HorizontalParallax>
         </div>
 
-        {/* MANIFESTE (STORYTELLING SOLO) AVEC TERMINAL */}
+        {/* MANIFESTE */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 mb-32 items-center">
             <div className="space-y-8 md:text-lg text-gray-300 font-light leading-relaxed">
                 <div>
                     <HorizontalParallax direction={-1} speed={20}>
                         <h3 className="text-white font-bold text-xl mb-2 flex items-center gap-2">
-                            <span className="text-cyan-500">01.</span> LA VISION
+                            <span className="text-cyan-500">01.</span> {t('vision_title')}
                         </h3>
                     </HorizontalParallax>
-                    <p>
-                        <strong className="text-white">MazouzWS</strong> est née d&apos;un constat : les grandes agences sont lentes et impersonnelles. Je propose une alternative : une expertise technique de haut vol, accessible directement. Pas de sous-traitance opaque, je suis votre seul pilote.
-                    </p>
+                    <p>{t('vision_text')}</p>
                 </div>
                 
                 <div>
                     <HorizontalParallax direction={1} speed={20}>
                         <h3 className="text-white font-bold text-xl mb-2 flex items-center gap-2">
-                            <span className="text-cyan-500">02.</span> L&apos;ENGAGEMENT
+                            <span className="text-cyan-500">02.</span> {t('engagement_title')}
                         </h3>
                     </HorizontalParallax>
-                    <p>
-                        Je ne prends qu&apos;un nombre limité de projets par an pour garantir une attention totale. Quand vous travaillez avec moi, vous louez mon cerveau, mes mains et mon obsession pour le détail. Votre succès est ma carte de visite.
-                    </p>
+                    <p>{t('engagement_text')}</p>
                 </div>
 
                 <div className="pt-4">
                     <div className="inline-flex items-center gap-4 px-6 py-3 border border-cyan-500/30 bg-cyan-500/5 rounded-full backdrop-blur-md">
                         <Trophy className="text-cyan-400" size={20} />
-                        <span className="text-xs md:text-sm font-bold tracking-widest text-cyan-100">INDÉPENDANT & ENGAGÉ</span>
+                        <span className="text-xs md:text-sm font-bold tracking-widest text-cyan-100">{t('badge')}</span>
                     </div>
                 </div>
             </div>
 
-            {/* TERMINAL HOLOGRAPHIQUE */}
+            {/* TERMINAL */}
             <div className="w-full flex justify-center transform hover:scale-[1.02] transition-transform duration-500">
                 <CyberTerminal />
             </div>
@@ -250,7 +229,7 @@ export default function AgencePage() {
             <HorizontalParallax direction={1} speed={40}>
                 <h3 className="text-2xl md:text-4xl font-black text-white mb-16 text-center flex items-center justify-center gap-3">
                     <Terminal size={32} className="text-cyan-500" />
-                    DATA LOGS
+                    {t('logs_title')}
                 </h3>
             </HorizontalParallax>
             
@@ -270,10 +249,10 @@ export default function AgencePage() {
             </div>
         </div>
 
-        {/* VALEURS (ADN) - MODE SPOTLIGHT */}
+        {/* VALEURS */}
         <div className="mb-32">
             <HorizontalParallax direction={-1} speed={40}>
-                <h3 className="text-2xl md:text-5xl font-black text-white mb-16 text-center">MON <span className="text-gray-500">ADN</span></h3>
+                <h3 className="text-2xl md:text-5xl font-black text-white mb-16 text-center">{t('dna_title')} <span className="text-gray-500">{t('dna_subtitle')}</span></h3>
             </HorizontalParallax>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full md:h-[350px]">
@@ -287,10 +266,10 @@ export default function AgencePage() {
         <div className="mb-32 py-12 border-y border-white/5 bg-white/[0.01]">
             <div className="text-center mb-12">
                 <HorizontalParallax direction={1} speed={20}>
-                    <h3 className="text-sm font-bold tracking-widest text-gray-500 mb-2">INFRASTRUCTURE</h3>
+                    <h3 className="text-sm font-bold tracking-widest text-gray-500 mb-2">{t('stack_subtitle')}</h3>
                 </HorizontalParallax>
                 <HorizontalParallax direction={-1} speed={30}>
-                    <p className="text-3xl font-black text-white">MY WEAPONRY</p>
+                    <p className="text-3xl font-black text-white">{t('stack_title')}</p>
                 </HorizontalParallax>
             </div>
             <div className="flex flex-wrap justify-center gap-4 px-4">
@@ -302,16 +281,16 @@ export default function AgencePage() {
             </div>
         </div>
 
-        {/* ÉQUIPE (OPERATOR UNIQUE) */}
+        {/* ÉQUIPE */}
         <div className="mb-32">
             <div className="text-center mb-16">
                 <HorizontalParallax direction={1} speed={40}>
                     <h3 className="text-2xl md:text-4xl font-black text-white mb-4 flex items-center justify-center gap-4">
                         <User size={32} className="text-cyan-500" />
-                        L&apos;OPÉRATEUR
+                        {t('operator_title')}
                     </h3>
                 </HorizontalParallax>
-                <p className="text-gray-500 text-sm font-mono">PROFIL LEAD // ACCÈS AUTORISÉ</p>
+                <p className="text-gray-500 text-sm font-mono">{t('operator_subtitle')}</p>
             </div>
             
             <div className="max-w-4xl mx-auto">
@@ -370,16 +349,16 @@ export default function AgencePage() {
             </div>
             <div className="relative z-10 max-w-2xl mx-auto">
                 <HorizontalParallax direction={-1} speed={30}>
-                    <h3 className="text-3xl font-black text-white mb-6">TRAVAILLER AVEC MOI</h3>
+                    <h3 className="text-3xl font-black text-white mb-6">{t('cta_title')}</h3>
                 </HorizontalParallax>
                 <p className="text-gray-400 mb-8 leading-relaxed">
-                    Vous avez un projet ambitieux ? Je cherche des défis, pas juste des contrats. Si vous voulez construire quelque chose de solide et de durable, parlons-en.
+                    {t('cta_desc')}
                 </p>
                 <Link 
                     href="/contact" 
                     className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-cyan-400 transition-all text-sm tracking-widest"
                 >
-                    INITIER LA COLLABORATION <ChevronRight size={16} />
+                    {t('cta_button')} <ChevronRight size={16} />
                 </Link>
             </div>
         </div>

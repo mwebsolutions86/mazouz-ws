@@ -2,10 +2,13 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl'; // <--- 1. IMPORTER LE HOOK
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import LanguageSwitcher from './LanguageSwitcher'; // Votre nouveau composant
 
 export default function Navbar() {
+  const t = useTranslations('Navigation'); // <--- 2. CHARGER LES TRADUCTIONS "Navigation"
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -23,36 +26,35 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* MENU DESKTOP */}
+        {/* MENU DESKTOP - TEXTE DYNAMIQUE */}
         <div className="hidden md:flex gap-6 text-xs font-bold tracking-widest text-gray-400">
           <Link href="/agence" className="hover:text-cyan-400 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-400 hover:after:w-full after:transition-all">
-            L&apos;AGENCE
+            {t('agence')} {/* <--- REMPLACEMENT DU TEXTE DUR PAR LA CLÉ */}
           </Link>
           <Link href="/services" className="hover:text-cyan-400 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-400 hover:after:w-full after:transition-all">
-            SERVICES
+            {t('services')}
           </Link>
           <Link href="/offres" className="hover:text-cyan-400 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-400 hover:after:w-full after:transition-all">
-            OFFRES
+            {t('offres')}
           </Link>
           <Link href="/methode" className="hover:text-cyan-400 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-400 hover:after:w-full after:transition-all">
-            MÉTHODE
+            {t('methode')}
           </Link>
           <Link href="/portfolio" className="hover:text-cyan-400 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-400 hover:after:w-full after:transition-all">
-            PORTFOLIO
+            {t('portfolio')}
           </Link>
         </div>
 
-        {/* CTA DESKTOP */}
-        <Link href="/contact" className="hidden md:block px-6 py-2 border border-white/20 rounded-full text-xs font-bold hover:bg-white hover:text-black transition-all bg-black/50 backdrop-blur-sm hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-          CONTACT
-        </Link>
+        {/* ACTIONS DESKTOP */}
+        <div className="hidden md:flex items-center gap-4">
+          <LanguageSwitcher />
+          <Link href="/contact" className="px-6 py-2 border border-white/20 rounded-full text-xs font-bold hover:bg-white hover:text-black transition-all bg-black/50 backdrop-blur-sm hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            {t('contact')}
+          </Link>
+        </div>
 
         {/* BOUTON HAMBURGER MOBILE */}
-        <button 
-          onClick={toggleMenu} 
-          className="md:hidden z-50 text-white p-2 focus:outline-none hover:text-cyan-400 transition-colors"
-          aria-label="Toggle menu"
-        >
+        <button onClick={toggleMenu} className="md:hidden z-50 text-white p-2 focus:outline-none hover:text-cyan-400 transition-colors">
           {isOpen ? <X size={32} className="text-cyan-400" /> : <Menu size={32} />}
         </button>
       </nav>
@@ -68,50 +70,31 @@ export default function Navbar() {
             className="fixed inset-0 z-40 bg-black/95 backdrop-blur-2xl flex flex-col items-center justify-center md:hidden"
           >
             <div className="flex flex-col gap-8 text-center">
-              <Link 
-                href="/agence" 
-                onClick={closeMenu}
-                className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest"
-              >
-                L&apos;AGENCE
+              <Link href="/agence" onClick={closeMenu} className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest">
+                {t('agence')}
               </Link>
-              <Link 
-                href="/services" 
-                onClick={closeMenu}
-                className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest"
-              >
-                SERVICES
+              <Link href="/services" onClick={closeMenu} className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest">
+                {t('services')}
               </Link>
-              <Link 
-                href="/offres" 
-                onClick={closeMenu}
-                className="text-3xl font-black text-cyan-400 hover:text-white transition-colors tracking-widest"
-              >
-                OFFRES
+              <Link href="/offres" onClick={closeMenu} className="text-3xl font-black text-cyan-400 hover:text-white transition-colors tracking-widest">
+                {t('offres')}
               </Link>
-              <Link 
-                href="/methode" 
-                onClick={closeMenu}
-                className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest"
-              >
-                MÉTHODE
+              <Link href="/methode" onClick={closeMenu} className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest">
+                {t('methode')}
               </Link>
-              <Link 
-                href="/portfolio" 
-                onClick={closeMenu}
-                className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest"
-              >
-                PORTFOLIO
+              <Link href="/portfolio" onClick={closeMenu} className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest">
+                {t('portfolio')}
               </Link>
               
               <div className="w-10 h-[1px] bg-white/20 mx-auto my-4"></div>
 
-              <Link 
-                href="/contact" 
-                onClick={closeMenu}
-                className="px-10 py-4 border border-cyan-500/50 bg-cyan-500/10 rounded-full text-xl font-bold text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all shadow-[0_0_30px_rgba(0,243,255,0.2)]"
-              >
-                CONTACT
+              {/* SÉLECTEUR LANGUE MOBILE */}
+              <div className="mb-6 scale-125">
+                  <LanguageSwitcher />
+              </div>
+
+              <Link href="/contact" onClick={closeMenu} className="px-10 py-4 border border-cyan-500/50 bg-cyan-500/10 rounded-full text-xl font-bold text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all">
+                {t('contact')}
               </Link>
             </div>
           </motion.div>

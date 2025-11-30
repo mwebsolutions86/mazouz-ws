@@ -9,6 +9,6 @@ export default createMiddleware({
 });
  
 export const config = {
-  // On applique ce middleware à toutes les routes sauf les fichiers statiques (images, etc.)
-  matcher: ['/', '/(fr|en|ar)/:path*']
+  // Matcher plus robuste qui ignore les dossiers internes de Next.js (_next), les images, etc.
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
 };

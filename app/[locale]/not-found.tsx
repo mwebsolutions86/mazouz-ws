@@ -2,14 +2,17 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Background3D from '@/app/components/3d/Background3D'; // On garde l'immersion
+import Background3D from '@/app/components/3d/Background3D';
 import { Home, WifiOff } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function NotFound() {
+  const t = useTranslations('NotFound');
+
   return (
     <div className="relative min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center overflow-hidden selection:bg-red-500 selection:text-white">
       
-      {/* Fond 3D (Toujours là pour la cohérence) */}
+      {/* Fond 3D */}
       <Background3D />
       
       <div className="relative z-10 text-center px-6 max-w-2xl">
@@ -28,13 +31,13 @@ export default function NotFound() {
             </div>
 
             <h2 className="relative z-10 text-3xl md:text-5xl font-black text-white mb-6 tracking-tight">
-                SIGNAL <span className="text-red-500">PERDU</span>
+                {t('title')}
             </h2>
         </div>
         
         {/* MESSAGE D'ERREUR */}
         <p className="text-gray-400 text-sm md:text-lg leading-relaxed mb-10 border-l-2 border-red-500/50 pl-6 text-left mx-auto max-w-lg bg-red-500/[0.02] py-4 rounded-r-lg">
-            Les coordonnées que vous cherchez ne correspondent à aucune destination active dans notre système. La page a peut-être été déclassifiée, déplacée ou n&apos;a jamais existé.
+            {t('message')}
         </p>
 
         {/* CTA RETOUR */}
@@ -43,12 +46,12 @@ export default function NotFound() {
             className="group inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-black text-sm tracking-widest rounded-full hover:bg-cyan-400 hover:scale-105 transition-all shadow-[0_0_30px_rgba(255,255,255,0.1)]"
         >
             <Home size={18} className="group-hover:-translate-y-1 transition-transform" />
-            RETOUR À LA BASE
+            {t('btn')}
         </Link>
 
         {/* INFO TECHNIQUE BAS DE PAGE */}
         <div className="mt-16 text-[10px] font-mono text-gray-600">
-            ERROR_CODE: 404_NOT_FOUND // PROTOCOL_MISMATCH
+            {t('code')}
         </div>
 
       </div>

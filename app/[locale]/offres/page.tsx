@@ -5,6 +5,7 @@ import Background3D from '@/app/components/3d/Background3D';
 import { HorizontalParallax } from '@/app/components/ui/Parallax';
 import { Check, Key, RefreshCcw, Settings, ShieldCheck, Zap, Database, MessageCircle, CreditCard, FileSignature, PenTool, Rocket, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 // --- DÉFINITION DES TYPES ---
 interface OfferType {
@@ -21,119 +22,120 @@ interface OfferType {
   detail?: string;
 }
 
-// --- DONNÉES DES OFFRES ---
-const acquisitionData: OfferType[] = [
-  {
-    title: "PACK VITRINE",
-    price: "1 750 DH",
-    period: "PAIEMENT UNIQUE",
-    desc: "La solution idéale pour lancer votre présence en ligne. Vous payez une fois, le site vous appartient à 100%.",
-    icon: Key,
-    features: [
-      "Site Vitrine (1 à 5 pages)",
-      "Design Responsive (Mobile & PC)",
-      "Référencement Naturel (SEO) de base",
-      "Formulaire de Contact sécurisé",
-      "Livraison du Code Source complet"
-    ],
-    cta: "COMMANDER SUR WHATSAPP",
-    highlight: false
-  },
-  {
-    title: "PACK BUSINESS",
-    price: "3 500 DH",
-    period: "PAIEMENT UNIQUE",
-    desc: "Pour les entreprises établies. Plus de contenu, plus de fonctionnalités, plus d'impact.",
-    icon: Key,
-    features: [
-      "Site complet (jusqu'à 10 pages)",
-      "CMS inclus (Admin panneau)",
-      "Blog / Actualités",
-      "SEO Technique Avancé",
-      "Google Analytics & Maps"
-    ],
-    cta: "COMMANDER SUR WHATSAPP",
-    highlight: true
-  },
-  {
-    title: "E-COMMERCE",
-    price: "DÈS 8 000 DH",
-    period: "PAIEMENT UNIQUE",
-    desc: "Votre boutique en ligne clé en main. Vendez vos produits 24/7.",
-    icon: Key,
-    features: [
-      "Boutique complète (Woo/Shopify)",
-      "Paiement en ligne (CMI/Stripe)",
-      "Gestion Stocks & Commandes",
-      "Formation Admin incluse",
-      "Jusqu'à 50 produits intégrés"
-    ],
-    cta: "DISCUTER SUR WHATSAPP",
-    highlight: false
-  }
-];
-
-const subscriptionData: OfferType[] = [
-  {
-    title: "START",
-    setup: "900 DH (FRAIS D'ENTRÉE)",
-    price: "250 DH",
-    period: "/ MOIS",
-    desc: "L'essentiel pour exister sans se ruiner. Idéal pour tester le marché.",
-    icon: RefreshCcw,
-    features: [
-      "Site Vitrine (Base Essential)",
-      "Hébergement & Nom de Domaine",
-      "Certificat SSL (Cadenas)",
-      "Maintenance Technique",
-      "1 modification mineure / mois"
-    ],
-    cta: "S'ABONNER VIA WHATSAPP",
-    highlight: false
-  },
-  {
-    title: "GROWTH",
-    setup: "1 500 DH (FRAIS D'ENTRÉE)",
-    price: "500 DH",
-    period: "/ MOIS",
-    desc: "Pour ceux qui veulent de la performance et de la sécurité active.",
-    icon: RefreshCcw,
-    features: [
-      "Site Business (Base Business)",
-      "Serveur Haute Performance",
-      "Rapport de Trafic Mensuel",
-      "Sécurité & Mises à jour Proactives",
-      "2h de modifications / mois"
-    ],
-    cta: "S'ABONNER VIA WHATSAPP",
-    highlight: true
-  },
-  {
-    title: "ELITE",
-    setup: "2 500 DH (FRAIS D'ENTRÉE)",
-    price: "900 DH",
-    period: "/ MOIS",
-    desc: "Le service VIP. Une équipe technique dédiée à votre croissance.",
-    icon: RefreshCcw,
-    features: [
-      "E-commerce ou WebApp",
-      "Serveur Dédié / VPS",
-      "Sauvegardes Journalières",
-      "Support Prioritaire (WhatsApp)",
-      "Conseil Stratégique Trimestriel"
-    ],
-    cta: "S'ABONNER VIA WHATSAPP",
-    highlight: false
-  }
-];
-
-const pricingData = {
-  acquisition: acquisitionData,
-  subscription: subscriptionData
-};
-
 export default function OffresPage() {
+  const t = useTranslations('OffresPage');
   const [mode, setMode] = useState<'acquisition' | 'subscription'>('acquisition');
+
+  // --- DONNÉES DES OFFRES ---
+  const acquisitionData: OfferType[] = [
+    {
+      title: t('pack_vitrine_title'),
+      price: "1 750 DH",
+      period: t('price_once'),
+      desc: t('pack_vitrine_desc'),
+      icon: Key,
+      features: [
+        "Site Vitrine (1 à 5 pages)",
+        "Design Responsive (Mobile & PC)",
+        "Référencement Naturel (SEO) de base",
+        "Formulaire de Contact sécurisé",
+        "Livraison du Code Source complet"
+      ],
+      cta: t('cta_whatsapp'),
+      highlight: false
+    },
+    {
+      title: t('pack_business_title'),
+      price: "3 500 DH",
+      period: t('price_once'),
+      desc: t('pack_business_desc'),
+      icon: Key,
+      features: [
+        "Site complet (jusqu'à 10 pages)",
+        "CMS inclus (Admin panneau)",
+        "Blog / Actualités",
+        "SEO Technique Avancé",
+        "Google Analytics & Maps"
+      ],
+      cta: t('cta_whatsapp'),
+      highlight: true
+    },
+    {
+      title: t('pack_ecommerce_title'),
+      price: "DÈS 8 000 DH",
+      period: t('price_once'),
+      desc: t('pack_ecommerce_desc'),
+      icon: Key,
+      features: [
+        "Boutique complète (Woo/Shopify)",
+        "Paiement en ligne (CMI/Stripe)",
+        "Gestion Stocks & Commandes",
+        "Formation Admin incluse",
+        "Jusqu'à 50 produits intégrés"
+      ],
+      cta: t('cta_whatsapp'),
+      highlight: false
+    }
+  ];
+
+  const subscriptionData: OfferType[] = [
+    {
+      title: t('pack_sub_start_title'),
+      setup: `900 DH (${t('setup_fee')})`,
+      price: "250 DH",
+      period: t('price_month'),
+      desc: t('pack_sub_start_desc'),
+      icon: RefreshCcw,
+      features: [
+        "Site Vitrine (Base Essential)",
+        "Hébergement & Nom de Domaine",
+        "Certificat SSL (Cadenas)",
+        "Maintenance Technique",
+        "1 modification mineure / mois"
+      ],
+      cta: t('cta_sub_whatsapp'),
+      highlight: false
+    },
+    {
+      title: t('pack_sub_growth_title'),
+      setup: `1 500 DH (${t('setup_fee')})`,
+      price: "500 DH",
+      period: t('price_month'),
+      desc: t('pack_sub_growth_desc'),
+      icon: RefreshCcw,
+      features: [
+        "Site Business (Base Business)",
+        "Serveur Haute Performance",
+        "Rapport de Trafic Mensuel",
+        "Sécurité & Mises à jour Proactives",
+        "2h de modifications / mois"
+      ],
+      cta: t('cta_sub_whatsapp'),
+      highlight: true
+    },
+    {
+      title: t('pack_sub_elite_title'),
+      setup: `2 500 DH (${t('setup_fee')})`,
+      price: "900 DH",
+      period: t('price_month'),
+      desc: t('pack_sub_elite_desc'),
+      icon: RefreshCcw,
+      features: [
+        "E-commerce ou WebApp",
+        "Serveur Dédié / VPS",
+        "Sauvegardes Journalières",
+        "Support Prioritaire (WhatsApp)",
+        "Conseil Stratégique Trimestriel"
+      ],
+      cta: t('cta_sub_whatsapp'),
+      highlight: false
+    }
+  ];
+
+  const pricingData = {
+    acquisition: acquisitionData,
+    subscription: subscriptionData
+  };
 
   // Fonction pour générer le lien WhatsApp
   const getWhatsAppLink = (offerTitle: string) => {
@@ -152,12 +154,12 @@ export default function OffresPage() {
         {/* HEADER */}
         <div className="mb-12 md:mb-16 text-center">
             <HorizontalParallax direction={-1} speed={20}>
-                <h2 className="text-cyan-500 text-[10px] md:text-xs font-bold tracking-[0.3em] md:tracking-[0.5em] mb-4 uppercase">Modèles Économiques</h2>
+                <h2 className="text-cyan-500 text-[10px] md:text-xs font-bold tracking-[0.3em] md:tracking-[0.5em] mb-4 uppercase">{t('subtitle')}</h2>
             </HorizontalParallax>
             <HorizontalParallax direction={1} speed={30}>
                 <h1 className="text-3xl sm:text-5xl md:text-7xl font-black text-white leading-none flex flex-col md:block items-center justify-center gap-2 md:gap-0">
-                    <span>CHOISISSEZ</span>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 md:ml-4">VOTRE VECTEUR</span>
+                    <span>{t('title_1')}</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 md:ml-4">{t('title_2')}</span>
                 </h1>
             </HorizontalParallax>
         </div>
@@ -179,13 +181,13 @@ export default function OffresPage() {
                     onClick={() => setMode('acquisition')}
                     className={`relative z-10 px-4 md:px-10 py-3 rounded-full text-[10px] md:text-sm font-bold tracking-widest transition-colors ${mode === 'acquisition' ? 'text-black' : 'text-gray-400 hover:text-white'}`}
                 >
-                    ACQUISITION
+                    {t('switcher_acq')}
                 </button>
                 <button 
                     onClick={() => setMode('subscription')}
                     className={`relative z-10 px-4 md:px-10 py-3 rounded-full text-[10px] md:text-sm font-bold tracking-widest transition-colors ${mode === 'subscription' ? 'text-black' : 'text-gray-400 hover:text-white'}`}
                 >
-                    ABONNEMENT
+                    {t('switcher_sub')}
                 </button>
             </div>
         </div>
@@ -227,12 +229,8 @@ export default function OffresPage() {
                             </div>
 
                             <div className="mb-8 text-center py-6 border-y border-white/5 bg-black/20 rounded-xl">
-                                {offer.setup && (
-                                    <div className="text-[10px] text-gray-500 font-mono mb-1">
-                                        {offer.setup}
-                                    </div>
-                                )}
-                                <div className="text-3xl md:text-4xl font-black text-white">{offer.price}</div>
+                                {offer.setup && <div className="text-[10px] text-gray-500 font-mono mb-1" dir="ltr">{offer.setup}</div>}
+                                <div className="text-3xl md:text-4xl font-black text-white" dir="ltr">{offer.price}</div>
                                 <div className="text-xs font-bold text-cyan-400 mt-1 tracking-wider">{offer.period}</div>
                             </div>
 
@@ -268,7 +266,7 @@ export default function OffresPage() {
              <div className="text-center mb-12">
                  <HorizontalParallax direction={1} speed={20}>
                     <h2 className="text-2xl md:text-4xl font-black text-white flex items-center justify-center gap-3">
-                        <CreditCard className="text-cyan-500" /> PROTOCOLE DE PAIEMENT
+                        <CreditCard className="text-cyan-500" /> {t('protocol_title')}
                     </h2>
                  </HorizontalParallax>
              </div>
@@ -295,7 +293,7 @@ export default function OffresPage() {
                             <div>
                                 <div className="flex items-baseline gap-3 mb-1">
                                     <span className="text-2xl font-black text-white">40%</span>
-                                    <span className="text-xs font-bold text-cyan-500 tracking-widest">SIGNATURE</span>
+                                    <span className="text-xs font-bold text-cyan-500 tracking-widest">{t('step_sign')}</span>
                                 </div>
                                 <p className="text-xs text-gray-400">Lancement du projet, réservation des ressources et initialisation du serveur.</p>
                             </div>
@@ -309,7 +307,7 @@ export default function OffresPage() {
                             <div>
                                 <div className="flex items-baseline gap-3 mb-1">
                                     <span className="text-2xl font-black text-white">30%</span>
-                                    <span className="text-xs font-bold text-purple-500 tracking-widest">VALIDATION DESIGN</span>
+                                    <span className="text-xs font-bold text-purple-500 tracking-widest">{t('step_design')}</span>
                                 </div>
                                 <p className="text-xs text-gray-400">Après validation des maquettes graphiques et de l&apos;architecture.</p>
                             </div>
@@ -323,7 +321,7 @@ export default function OffresPage() {
                             <div>
                                 <div className="flex items-baseline gap-3 mb-1">
                                     <span className="text-2xl font-black text-white">30%</span>
-                                    <span className="text-xs font-bold text-green-500 tracking-widest">LIVRAISON FINALE</span>
+                                    <span className="text-xs font-bold text-green-500 tracking-widest">{t('step_final')}</span>
                                 </div>
                                 <p className="text-xs text-gray-400">À la mise en ligne du site et remise des accès administrateur.</p>
                             </div>
@@ -367,22 +365,22 @@ export default function OffresPage() {
             <div className="flex gap-4 items-start">
                 <ShieldCheck className="text-green-500 shrink-0" />
                 <div>
-                    <h4 className="font-bold text-white text-sm mb-1">GARANTIE CONTRATUELLE</h4>
-                    <p className="text-xs text-gray-400">Chaque mission est encadrée par un contrat clair. Délais et livrables garantis.</p>
+                    <h4 className="font-bold text-white text-sm mb-1">{t('guarantee_title')}</h4>
+                    <p className="text-xs text-gray-400">{t('guarantee_desc')}</p>
                 </div>
             </div>
             <div className="flex gap-4 items-start">
                 <Zap className="text-yellow-500 shrink-0" />
                 <div>
-                    <h4 className="font-bold text-white text-sm mb-1">DÉMARRAGE RAPIDE</h4>
-                    <p className="text-xs text-gray-400">Une fois le devis validé, le sprint de développement commence sous 48h.</p>
+                    <h4 className="font-bold text-white text-sm mb-1">{t('speed_title')}</h4>
+                    <p className="text-xs text-gray-400">{t('speed_desc')}</p>
                 </div>
             </div>
             <div className="flex gap-4 items-start">
                 <Database className="text-purple-500 shrink-0" />
                 <div>
-                    <h4 className="font-bold text-white text-sm mb-1">PROPRIÉTÉ TOTALE</h4>
-                    <p className="text-xs text-gray-400">Que ce soit en achat ou après l&apos;abonnement, vos données vous appartiennent.</p>
+                    <h4 className="font-bold text-white text-sm mb-1">{t('ownership_title')}</h4>
+                    <p className="text-xs text-gray-400">{t('ownership_desc')}</p>
                 </div>
             </div>
         </div>
@@ -394,11 +392,10 @@ export default function OffresPage() {
                     <div className="p-2 bg-purple-500/20 rounded-lg">
                         <Settings className="text-purple-400" size={24} />
                     </div>
-                    <h3 className="text-xl font-bold text-white">BESOIN DE SUR-MESURE ?</h3>
+                    <h3 className="text-xl font-bold text-white">{t('custom_title')}</h3>
                 </div>
                 <p className="text-gray-400 text-sm md:text-base leading-relaxed">
-                    Pour les projets d&apos;envergure (SaaS, Marketplaces complexes, Intégrations API lourdes). 
-                    Nous élaborons un cahier des charges précis et un devis personnalisé.
+                    {t('custom_desc')}
                 </p>
             </div>
             <a 
@@ -407,7 +404,7 @@ export default function OffresPage() {
                 rel="noopener noreferrer"
                 className="whitespace-nowrap px-8 py-4 bg-purple-600/10 border border-purple-500/50 text-purple-400 font-bold rounded-xl hover:bg-purple-600 hover:text-white transition-all flex items-center gap-2"
             >
-                <MessageCircle size={18} /> DEMANDER UN DEVIS
+                <MessageCircle size={18} /> {t('custom_btn')}
             </a>
         </div>
 

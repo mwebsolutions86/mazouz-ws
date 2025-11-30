@@ -3,67 +3,68 @@
 import React from 'react';
 import Background3D from '@/app/components/3d/Background3D';
 import { HorizontalParallax } from '@/app/components/ui/Parallax';
-// Ajout de ArrowRight, CheckCircle2, Activity dans les imports
 import { Search, PenTool, Code, Rocket, ShieldCheck, CheckCircle2, FileCode, Trello, GitBranch, Server, Eye, Lock, ArrowRight, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
-import Link from 'next/link'; // Link n'était pas utilisé avant, mais je l'ajoute au cas où
-
-// ... (Le reste des constantes steps et qualityStandards reste inchangé) ...
-const steps = [
-  {
-    id: "01",
-    phase: "INITIATION",
-    title: "DEEP SCAN & STRATÉGIE",
-    icon: Search,
-    desc: "Nous ne commençons pas par coder. Nous commençons par comprendre. Nous disséquons votre modèle économique, vos concurrents et vos contraintes techniques.",
-    inputs: ["Brief Client", "Audit Concurrentiel", "Objectifs KPI"],
-    outputs: ["Cahier des Charges Technique", "Roadmap Produit", "Choix de la Stack"]
-  },
-  {
-    id: "02",
-    phase: "BLUEPRINT",
-    title: "ARCHITECTURE & DESIGN",
-    icon: PenTool,
-    desc: "Conception des fondations. Nous créons les maquettes haute-fidélité (UI) et l'architecture des données (Schema DB). Rien n'est laissé au hasard avant le premier commit.",
-    inputs: ["Wireframes", "Identité Visuelle", "User Stories"],
-    outputs: ["Maquettes Figma Validées", "Diagramme de Base de Données", "Design System"]
-  },
-  {
-    id: "03",
-    phase: "PRODUCTION",
-    title: "DÉVELOPPEMENT ITÉRATIF",
-    icon: Code,
-    desc: "Le moteur démarre. Nous travaillons en Sprints de 2 semaines. Vous voyez le produit évoluer en temps réel. Code propre, typé (TypeScript) et commenté.",
-    inputs: ["Maquettes", "Assets Graphiques", "Contenu"],
-    outputs: ["Version Staging (Pré-prod)", "Code Source GitHub", "Tests Unitaires"]
-  },
-  {
-    id: "04",
-    phase: "QUALITÉ",
-    title: "STRESS TESTS & SÉCURITÉ",
-    icon: ShieldCheck,
-    desc: "Avant le lancement, nous martyrisons le site. Tests de charge, audits de sécurité, vérification mobile. Nous traquons le moindre bug pour garantir un lancement zéro défaut.",
-    inputs: ["Version Beta", "Scénarios de Test"],
-    outputs: ["Rapport d'Audit", "Score Lighthouse 100%", "Validation Sécurité"]
-  },
-  {
-    id: "05",
-    phase: "DÉPLOIEMENT",
-    title: "IGNITION (MISE EN LIGNE)",
-    icon: Rocket,
-    desc: "Mise en production sur infrastructure Cloud Edge (Vercel/AWS). Configuration des domaines, du SSL et du monitoring. Votre projet est vivant.",
-    inputs: ["Validation Finale", "DNS", "Clés API"],
-    outputs: ["Site Live", "Accès Admin", "Documentation"]
-  }
-];
-
-const qualityStandards = [
-  { title: "CLEAN CODE", desc: "Architecture modulaire, SOLID principles. Code maintenable par n'importe quel ingénieur.", icon: FileCode },
-  { title: "SÉCURITÉ MAXIMALE", desc: "Protection DDOS, Chiffrement des données, Headers de sécurité HTTP stricts.", icon: Lock },
-  { title: "PERFORMANCE PURE", desc: "Pas de code mort. Chargement < 1s. Optimisation Core Web Vitals native.", icon: Server }
-];
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 export default function MethodePage() {
+  const t = useTranslations('MethodePage');
+
+  const steps = [
+    {
+      id: "01",
+      phase: "INITIATION",
+      title: t('step_1_title'),
+      icon: Search,
+      desc: t('step_1_desc'),
+      inputs: ["Brief Client", "Audit", "KPI"],
+      outputs: ["Cahier des Charges", "Roadmap", "Stack"]
+    },
+    {
+      id: "02",
+      phase: "BLUEPRINT",
+      title: t('step_2_title'),
+      icon: PenTool,
+      desc: t('step_2_desc'),
+      inputs: ["Wireframes", "UI", "User Stories"],
+      outputs: ["Figma Validé", "DB Schema", "Design System"]
+    },
+    {
+      id: "03",
+      phase: "PRODUCTION",
+      title: t('step_3_title'),
+      icon: Code,
+      desc: t('step_3_desc'),
+      inputs: ["Maquettes", "Assets", "Contenu"],
+      outputs: ["Staging", "GitHub", "Unit Tests"]
+    },
+    {
+      id: "04",
+      phase: "QUALITÉ",
+      title: t('step_4_title'),
+      icon: ShieldCheck,
+      desc: t('step_4_desc'),
+      inputs: ["Beta", "Scénarios"],
+      outputs: ["Rapport Audit", "Lighthouse 100%", "Validation"]
+    },
+    {
+      id: "05",
+      phase: "DÉPLOIEMENT",
+      title: t('step_5_title'),
+      icon: Rocket,
+      desc: t('step_5_desc'),
+      inputs: ["Validation", "DNS", "API Keys"],
+      outputs: ["Live Site", "Admin", "Doc"]
+    }
+  ];
+
+  const qualityStandards = [
+    { title: t('std_1_title'), desc: t('std_1_desc'), icon: FileCode },
+    { title: t('std_2_title'), desc: t('std_2_desc'), icon: Lock },
+    { title: t('std_3_title'), desc: t('std_3_desc'), icon: Server }
+  ];
+
   return (
     <div className="relative min-h-screen bg-[#050505] text-white pt-28 md:pt-32 px-4 md:px-6 overflow-x-hidden selection:bg-cyan-500 selection:text-black">
       <Background3D />
@@ -73,17 +74,16 @@ export default function MethodePage() {
         {/* HEADER */}
         <div className="mb-20 md:mb-32 text-center">
             <HorizontalParallax direction={-1} speed={30}>
-                <h2 className="text-cyan-500 text-[10px] md:text-xs font-bold tracking-[0.3em] md:tracking-[0.5em] mb-4 uppercase">Méthodologie</h2>
+                <h2 className="text-cyan-500 text-[10px] md:text-xs font-bold tracking-[0.3em] md:tracking-[0.5em] mb-4 uppercase">{t('subtitle')}</h2>
             </HorizontalParallax>
             <HorizontalParallax direction={1} speed={50}>
                 <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white leading-none flex flex-col md:block items-center justify-center gap-2 md:gap-0">
-                    <span>ENGINEERING</span>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 md:ml-4">CHAOS</span>
+                    <span>{t('title_1')}</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600 md:ml-4">{t('title_2')}</span>
                 </h1>
             </HorizontalParallax>
             <p className="text-gray-400 text-sm md:text-lg max-w-2xl mx-auto mt-8 leading-relaxed">
-                Le chaos est l&apos;ennemi du succès. Nous appliquons une rigueur scientifique à la création digitale. 
-                Pas d&apos;improvisation, juste des processus éprouvés pour des résultats prévisibles.
+                {t('intro')}
             </p>
         </div>
 
@@ -124,7 +124,7 @@ export default function MethodePage() {
                                     <div className={`relative z-10 w-full bg-white/[0.03] border border-white/10 rounded-xl p-4 flex flex-col md:flex-row gap-6 ${isEven ? 'md:justify-end' : 'md:justify-start'}`}>
                                         <div>
                                             <p className="text-[10px] font-bold text-gray-500 mb-2 uppercase tracking-wider flex items-center gap-2">
-                                                <ArrowRight size={10} className="rotate-90 md:rotate-0" /> INPUT
+                                                <ArrowRight size={10} className="rotate-90 md:rotate-0" /> {t('input')}
                                             </p>
                                             <ul className={`text-xs text-gray-400 space-y-1 font-mono ${isEven ? 'md:text-right' : 'text-left'}`}>
                                                 {step.inputs.map((item, i) => <li key={i}>• {item}</li>)}
@@ -133,7 +133,7 @@ export default function MethodePage() {
                                         <div className="w-full h-[1px] md:w-[1px] md:h-auto bg-white/10"></div>
                                         <div>
                                             <p className="text-[10px] font-bold text-green-500 mb-2 uppercase tracking-wider flex items-center gap-2">
-                                                <CheckCircle2 size={10} /> OUTPUT (LIVRABLE)
+                                                <CheckCircle2 size={10} /> {t('output')}
                                             </p>
                                             <ul className={`text-xs text-white space-y-1 font-mono font-bold ${isEven ? 'md:text-right' : 'text-left'}`}>
                                                 {step.outputs.map((item, i) => <li key={i}>• {item}</li>)}
@@ -154,10 +154,10 @@ export default function MethodePage() {
         <div className="mb-32">
             <div className="text-center mb-16">
                 <HorizontalParallax direction={1} speed={30}>
-                    <h2 className="text-2xl md:text-4xl font-black text-white mb-4">STANDARD <span className="text-cyan-500">MILITAIRE</span></h2>
+                    <h2 className="text-2xl md:text-4xl font-black text-white mb-4">{t('standards_title')}</h2>
                 </HorizontalParallax>
                 <p className="text-gray-400 text-sm max-w-xl mx-auto">
-                    Un code qui fonctionne ne suffit pas. Nous livrons un code résilient, sécurisé et documenté. C&apos;est notre garantie pérennité.
+                    {t('standards_subtitle')}
                 </p>
             </div>
 
@@ -178,8 +178,8 @@ export default function MethodePage() {
         <div className="mb-32 py-12 border-y border-white/5 bg-black/50">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8 px-4 md:px-12">
                 <div className="text-center md:text-left">
-                    <h3 className="text-xl font-bold text-white mb-2">NOTRE OUTILLAGE</h3>
-                    <p className="text-xs text-gray-400">Les meilleurs outils pour une transparence totale.</p>
+                    <h3 className="text-xl font-bold text-white mb-2">{t('tools_title')}</h3>
+                    <p className="text-xs text-gray-400">{t('tools_desc')}</p>
                 </div>
                 
                 <div className="flex flex-wrap justify-center gap-6 md:gap-12">
@@ -206,11 +206,11 @@ export default function MethodePage() {
              <div className="relative z-10 md:w-1/2">
                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-green-500/30 bg-green-500/10 mb-6">
                     <Eye size={12} className="text-green-400" />
-                    <span className="text-[10px] font-bold text-green-300 tracking-widest">TRANSPARENCE TOTALE</span>
+                    <span className="text-[10px] font-bold text-green-300 tracking-widest">{t('transparency_badge')}</span>
                  </div>
-                 <h2 className="text-3xl md:text-5xl font-black text-white mb-6">VOUS VOYEZ CE QUE NOUS <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">VOYONS</span>.</h2>
+                 <h2 className="text-3xl md:text-5xl font-black text-white mb-6">{t('transparency_title')}</h2>
                  <p className="text-gray-400 leading-relaxed mb-6">
-                     Fini l&apos;effet &quot;Boîte Noire&quot;. Vous avez accès à notre tableau de bord de projet. Vous voyez les tâches avancer, les maquettes évoluer et le code se construire.
+                     {t('transparency_desc')}
                  </p>
                  <ul className="space-y-2 text-sm text-white">
                      <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-green-500" /> Réunions de démo hebdomadaires</li>
@@ -234,9 +234,9 @@ export default function MethodePage() {
 
         {/* CTA FINAL */}
         <div className="text-center">
-            <p className="text-gray-500 mb-6 font-mono text-xs md:text-sm">PRÊT À LANCER LA SÉQUENCE ?</p>
+            <p className="text-gray-500 mb-6 font-mono text-xs md:text-sm">{t('cta_text')}</p>
             <Link href="/contact" className="inline-block px-8 py-4 md:px-12 md:py-6 bg-white text-black font-black text-sm md:text-xl tracking-widest rounded-full hover:bg-cyan-400 hover:scale-105 transition-all shadow-[0_0_50px_rgba(255,255,255,0.2)]">
-                DÉMARRER LE PROJET
+                {t('cta_btn')}
             </Link>
         </div>
 

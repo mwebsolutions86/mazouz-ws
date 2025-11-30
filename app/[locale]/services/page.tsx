@@ -6,6 +6,7 @@ import { HorizontalParallax } from '@/app/components/ui/Parallax';
 import { Smartphone, Brain, Globe, Layers, Cpu, Zap, Plus, Scan, TrendingUp, ShieldCheck, Users, Lightbulb, Target, Rocket, AlertTriangle, Lock, ArrowRight } from 'lucide-react';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 // --- TYPE DEFINITIONS ---
 interface ServiceType {
@@ -16,71 +17,6 @@ interface ServiceType {
   description: string;
   specs: string[];
 }
-
-// --- DONNÉES TECHNIQUES ---
-const services: ServiceType[] = [
-  {
-    id: "01",
-    icon: Smartphone,
-    title: "MOBILE ENGINEERING",
-    description: "Apps natives React Native 60FPS. Architecture Offline-first. Haptique avancée.",
-    specs: ["iOS & Android", "Biométrie", "Temps Réel"]
-  },
-  {
-    id: "02",
-    icon: Brain,
-    title: "AI INTEGRATION",
-    description: "Injection de LLM (GPT-4) et agents autonomes pour automatiser le business.",
-    specs: ["RAG Systems", "Chatbots", "Analyse Data"]
-  },
-  {
-    id: "03",
-    icon: Globe,
-    title: "IMMERSIVE WEB",
-    description: "Expériences 3D WebGL (Three.js) qui convertissent et marquent les esprits.",
-    specs: ["WebGL / 3D", "Shaders", "Performance"]
-  },
-  {
-    id: "04",
-    icon: Layers,
-    title: "SAAS ARCHITECTURE",
-    description: "Backends scalables et sécurisés pour encaisser des millions de requêtes.",
-    specs: ["Cloud Native", "Microservices", "Sécurité"]
-  },
-  {
-    id: "05",
-    icon: Cpu,
-    title: "IOT & HARDWARE",
-    description: "Fusion du code et du métal. Pilotage de drones et objets connectés.",
-    specs: ["Bluetooth", "MQTT", "Embedded"]
-  },
-  {
-    id: "06",
-    icon: Zap,
-    title: "PERFORMANCE",
-    description: "Optimisation radicale. Nous visons le score 100/100 sur Google Lighthouse.",
-    specs: ["SEO Technique", "Core Vitals", "Speed"]
-  }
-];
-
-// --- DONNÉES BUSINESS ---
-const businessImpacts = [
-  {
-    title: "ACQUISITION",
-    desc: "Un site immersif retient l'attention 4x plus longtemps qu'un site classique. Plus d'attention = Plus de clients.",
-    icon: Target
-  },
-  {
-    title: "CONVERSION",
-    desc: "La vitesse est la clé. Chaque 100ms gagnées sur le chargement augmente vos ventes de 1%. Nous vous faisons gagner des secondes.",
-    icon: TrendingUp
-  },
-  {
-    title: "AUTOMATISATION",
-    desc: "Nos solutions IA ne dorment jamais. Elles traitent vos demandes clients et vos données 24h/24, réduisant vos coûts opérationnels.",
-    icon: Lightbulb
-  }
-];
 
 // --- COMPOSANT CARTE "SPOTLIGHT" ---
 function SpotlightCard({ service, index }: { service: ServiceType, index: number }) {
@@ -145,6 +81,73 @@ function SpotlightCard({ service, index }: { service: ServiceType, index: number
 }
 
 export default function ServicesPage() {
+  const t = useTranslations('ServicesPage');
+
+  // --- DONNÉES TECHNIQUES ---
+  const services: ServiceType[] = [
+    {
+      id: "01",
+      icon: Smartphone,
+      title: t('serv_1_title'),
+      description: t('serv_1_desc'),
+      specs: ["iOS & Android", "Biométrie", "Temps Réel"]
+    },
+    {
+      id: "02",
+      icon: Brain,
+      title: t('serv_2_title'),
+      description: t('serv_2_desc'),
+      specs: ["RAG Systems", "Chatbots", "Analyse Data"]
+    },
+    {
+      id: "03",
+      icon: Globe,
+      title: t('serv_3_title'),
+      description: t('serv_3_desc'),
+      specs: ["WebGL / 3D", "Shaders", "Performance"]
+    },
+    {
+      id: "04",
+      icon: Layers,
+      title: t('serv_4_title'),
+      description: t('serv_4_desc'),
+      specs: ["Cloud Native", "Microservices", "Sécurité"]
+    },
+    {
+      id: "05",
+      icon: Cpu,
+      title: t('serv_5_title'),
+      description: t('serv_5_desc'),
+      specs: ["Bluetooth", "MQTT", "Embedded"]
+    },
+    {
+      id: "06",
+      icon: Zap,
+      title: t('serv_6_title'),
+      description: t('serv_6_desc'),
+      specs: ["SEO Technique", "Core Vitals", "Speed"]
+    }
+  ];
+
+  // --- DONNÉES BUSINESS ---
+  const businessImpacts = [
+    {
+      title: t('imp_1_title'),
+      desc: t('imp_1_desc'),
+      icon: Target
+    },
+    {
+      title: t('imp_2_title'),
+      desc: t('imp_2_desc'),
+      icon: TrendingUp
+    },
+    {
+      title: t('imp_3_title'),
+      desc: t('imp_3_desc'),
+      icon: Lightbulb
+    }
+  ];
+
   return (
     <div className="relative min-h-screen bg-[#050505] text-white pt-28 md:pt-32 px-4 md:px-6 overflow-x-hidden selection:bg-cyan-500 selection:text-black">
       <Background3D />
@@ -154,13 +157,13 @@ export default function ServicesPage() {
         {/* HEADER CORRIGÉ POUR MOBILE */}
         <div className="mb-12 md:mb-20 border-b border-white/10 pb-8 md:pb-10 text-center md:text-left">
             <HorizontalParallax direction={-1} speed={30}>
-                <h2 className="text-cyan-500 text-[10px] md:text-xs font-bold tracking-[0.3em] md:tracking-[0.5em] mb-4 md:mb-4">CAPACITÉS OPÉRATIONNELLES</h2>
+                <h2 className="text-cyan-500 text-[10px] md:text-xs font-bold tracking-[0.3em] md:tracking-[0.5em] mb-4 md:mb-4">{t('subtitle')}</h2>
             </HorizontalParallax>
             
             <HorizontalParallax direction={1} speed={40}> {/* Vitesse réduite */}
                 <h1 className="text-4xl sm:text-5xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500 leading-none flex flex-col md:block items-center md:items-start gap-2 md:gap-0">
-                    <span>NOTRE</span>
-                    <span className="text-white md:ml-4">ARSENAL</span>
+                    <span>{t('title_1')}</span>
+                    <span className="text-white md:ml-4">{t('title_2')}</span>
                 </h1>
             </HorizontalParallax>
         </div>
@@ -184,15 +187,15 @@ export default function ServicesPage() {
                     <div className="max-w-2xl">
                         <div className="flex items-center gap-3 mb-4">
                             <div className="w-3 h-3 bg-red-500 rounded-full animate-ping" />
-                            <h3 className="text-red-400 font-mono text-xs font-bold tracking-widest">SYSTÈME NON OPTIMISÉ DÉTECTÉ ?</h3>
+                            <h3 className="text-red-400 font-mono text-xs font-bold tracking-widest">{t('diag_alert')}</h3>
                         </div>
                         
                         <HorizontalParallax direction={1} speed={30}>
-                            <h2 className="text-2xl md:text-4xl font-black text-white mb-4">VOTRE INFRASTRUCTURE VOUS RALENTIT.</h2>
+                            <h2 className="text-2xl md:text-4xl font-black text-white mb-4">{t('diag_title')}</h2>
                         </HorizontalParallax>
                         
                         <p className="text-gray-400 leading-relaxed text-sm md:text-base">
-                            Chaque seconde de chargement en trop vous coûte 7% de conversion. Votre code actuel est peut-être votre pire ennemi. Laissez-nous scanner votre stack.
+                            {t('diag_desc')}
                         </p>
                     </div>
                     <Link 
@@ -200,7 +203,7 @@ export default function ServicesPage() {
                         className="whitespace-nowrap px-8 py-4 bg-red-600/10 border border-red-500/50 text-red-400 font-bold rounded-xl hover:bg-red-600 hover:text-white transition-all flex items-center gap-3 text-sm md:text-base"
                     >
                         <Scan size={20} />
-                        INITIALISER LE DIAGNOSTIC
+                        {t('diag_btn')}
                     </Link>
                 </div>
             </div>
@@ -210,9 +213,9 @@ export default function ServicesPage() {
         <div className="mb-32">
             <div className="text-center mb-16">
                 <HorizontalParallax direction={1} speed={40}>
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6">CE QUE ÇA <span className="text-cyan-500">CHANGE</span> POUR VOUS</h2>
+                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6">{t('impact_title_1')} <span className="text-cyan-500">{t('impact_title_2')}</span> {t('impact_title_3')}</h2>
                 </HorizontalParallax>
-                <p className="text-gray-400 max-w-2xl mx-auto">Parce que la technologie n&apos;est qu&apos;un moyen. Voici les résultats concrets que nous livrons.</p>
+                <p className="text-gray-400 max-w-2xl mx-auto">{t('impact_sub')}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -241,29 +244,29 @@ export default function ServicesPage() {
             <div className="relative z-10 max-w-3xl mx-auto">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 mb-8">
                     <Lock size={12} className="text-cyan-400" />
-                    <span className="text-[10px] font-bold text-cyan-300 tracking-widest">ACCESS LEVEL: VISIONARY</span>
+                    <span className="text-[10px] font-bold text-cyan-300 tracking-widest">{t('vis_badge')}</span>
                 </div>
                 
                 <HorizontalParallax direction={-1} speed={30}>
                     <h2 className="text-3xl md:text-6xl font-black text-white mb-8 leading-tight">
-                        VOUS AVEZ LA VISION.<br/>
-                        NOUS AVONS LA <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">PUISSANCE DE FEU</span>.
+                        {t('vis_title')}
                     </h2>
                 </HorizontalParallax>
                 
                 <p className="text-gray-400 text-lg mb-10">
-                    Ne laissez pas des limitations techniques brider votre ambition. Nous sommes l&apos;extension d&apos;élite de votre équipe.
+                    {t('vis_desc')}
                 </p>
                 <Link 
                     href="/contact"
                     className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-black rounded-full hover:bg-cyan-400 transition-all hover:scale-105"
                 >
-                    CONFIGURER L&apos;ALLIANCE <ArrowRight size={20} />
+                    {t('vis_btn')} <ArrowRight size={20} />
                 </Link>
             </div>
         </div>
 
         {/* --- NOUVELLE SECTION 2 : VISION & PARTENARIAT --- */}
+        {/* ... (Cette section n'avait pas de clés explicites dans le JSON, je la laisse simplifiée ou je garde les textes génériques si besoin) ... */}
         <div className="mb-32 relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gray-900 to-black">
             <div className="absolute top-0 right-0 p-10 opacity-10">
                 <Users size={300} />

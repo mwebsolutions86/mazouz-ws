@@ -6,7 +6,6 @@ import Navbar from "@/app/components/ui/Navbar";
 import Footer from "@/app/components/ui/Footer";
 import "../globals.css";
 
-
 export const metadata: Metadata = {
   title: "MazouzWS - Digital Forge",
   description: "Agence de développement web et mobile futuriste.",
@@ -24,9 +23,10 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: { locale: string }; // On simplifie le type params pour la compatibilité
+  params: Promise<{ locale: string }>; // CORRECTION: Typage Promise
 }) {
-  const { locale } = params;
+  // CORRECTION: On doit await les params dans Next.js 15+
+  const { locale } = await params;
 
   // 1. Vérification de la langue
   if (!['fr', 'en', 'ar'].includes(locale)) {

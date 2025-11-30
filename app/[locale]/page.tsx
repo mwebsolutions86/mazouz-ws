@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Globe, Smartphone, Brain, Cpu, Code, Layers, Zap, Search, PenTool, Rocket, Mail, TrendingUp, ShieldCheck, Clock, Activity, Server, Lock, Wifi, FileText, Database, SmartphoneCharging,} from 'lucide-react';
+import { ArrowRight, Globe, Smartphone, Brain, Cpu, Code, Layers, Zap, Search, PenTool, Rocket, Mail, TrendingUp, ShieldCheck, Clock, Activity, Server, Lock, Wifi, FileText, Database, SmartphoneCharging } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Background3D from '@/app/components/3d/Background3D';
-//import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 // --- PARALLAXE ---
 interface ParallaxProps {
@@ -17,14 +17,14 @@ interface ParallaxProps {
 }
 
 function Parallax({ children, speed = 50, className = "" }: ParallaxProps) {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [speed, -speed]);
   return <motion.div ref={ref} style={{ y }} className={className}>{children}</motion.div>;
 }
 
 function HorizontalParallax({ children, direction = 1, speed = 100, className = "" }: ParallaxProps) {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const x = useTransform(scrollYProgress, [0, 1], [-20 * direction, speed * direction]);
   return <motion.div ref={ref} style={{ x }} className={className}>{children}</motion.div>;
@@ -165,6 +165,11 @@ const SystemMonitor = () => {
 };
 
 export default function Home() {
+  const t = useTranslations('HomePage');
+  // Nous réutilisons les traductions existantes des autres pages pour les sections communes (Services, Méthode)
+  const servicesT = useTranslations('ServicesPage');
+  const methodeT = useTranslations('MethodePage');
+
   return (
     <div className="relative w-full min-h-screen bg-[#050505] text-white overflow-x-hidden font-sans selection:bg-cyan-500 selection:text-black">
       
@@ -176,20 +181,20 @@ export default function Home() {
           
           <HorizontalParallax direction={-1} speed={30}>
             <h2 className="text-cyan-500 text-[10px] md:text-sm font-bold tracking-[0.5em] md:tracking-[0.8em] mb-4 md:mb-8 text-center uppercase">
-              Agence Digitale d&apos;Élite
+              {t('title')}
             </h2>
           </HorizontalParallax>
           
           <div className="flex flex-col items-center mb-8 relative w-full">
             <HorizontalParallax direction={-1} speed={100} className="w-full">
               <h1 className="text-5xl sm:text-6xl md:text-9xl font-black leading-none tracking-tighter text-white/90 text-center">
-                FORGING
+                {t('hero').split(' ')[0] || "FORGING"}
               </h1>
             </HorizontalParallax>
             
             <HorizontalParallax direction={1} speed={100} className="w-full">
               <h1 className="text-5xl sm:text-6xl md:text-9xl font-black leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-gray-200 via-white to-gray-400 text-center">
-                REALITY
+                {t('hero').split(' ')[1] || "REALITY"}
               </h1>
             </HorizontalParallax>
           </div>
@@ -200,7 +205,7 @@ export default function Home() {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="text-gray-400 text-sm md:text-2xl max-w-2xl mx-auto mb-12 font-light leading-relaxed px-4 text-center"
           >
-            Nous transformons des idées complexes en <span className="text-white font-medium">machines de guerre digitales</span>. Architecture robuste, design immersif et performance absolue pour dominer votre marché.
+            {t('description')}
           </motion.p>
 
           <motion.div 
@@ -210,10 +215,10 @@ export default function Home() {
             className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full px-4"
           >
             <Link href="/contact" className="w-full sm:w-auto relative px-8 py-4 bg-white text-black font-black text-xs md:text-sm tracking-widest rounded-full hover:scale-105 transition-transform shadow-[0_0_30px_rgba(255,255,255,0.2)] text-center">
-              DÉMARRER LE PROJET
+              {t('cta_start')}
             </Link>
             <Link href="/services" className="flex items-center justify-center gap-3 text-xs md:text-sm font-bold tracking-widest text-gray-400 hover:text-white transition-colors">
-              NOTRE EXPERTISE <ArrowRight size={16} />
+              {t('cta_services')} <ArrowRight size={16} />
             </Link>
           </motion.div>
         </div>
@@ -223,18 +228,18 @@ export default function Home() {
       <section id="services" className="relative z-10 py-20 md:py-32 px-4 md:px-6 max-w-7xl mx-auto overflow-hidden">
         <div className="mb-12 md:mb-20 border-b border-white/10 pb-10 flex flex-col md:flex-row justify-between items-end gap-6">
             <HorizontalParallax direction={1} speed={80} className="w-full">
-                <h2 className="text-3xl md:text-6xl font-black text-white mb-2">ARSENAL</h2>
-                <p className="text-cyan-400 font-mono text-xs md:text-sm"> TECHNOLOGIES</p>
+                <h2 className="text-3xl md:text-6xl font-black text-white mb-2">{t('arsenal_title')}</h2>
+                <p className="text-cyan-400 font-mono text-xs md:text-sm"> {t('arsenal_sub')}</p>
             </HorizontalParallax>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            <ServiceCard index={1} icon={Smartphone} title="Mobile Engineering" desc="Apps natives React Native haute performance. Fluidité 60FPS et usage hors-ligne." />
-            <ServiceCard index={2} icon={Brain} title="AI Integration" desc="Intégration d'IA (GPT-4) pour automatiser vos processus et analyser vos données." />
-            <ServiceCard index={3} icon={Globe} title="Immersive Web" desc="Sites 3D (Three.js) primés qui marquent les esprits et convertissent." />
-            <ServiceCard index={4} icon={Layers} title="SaaS Architecture" desc="Plateformes cloud scalables capables de gérer des milliers d'utilisateurs." />
-            <ServiceCard index={5} icon={Cpu} title="IoT & Hardware" desc="Connexion de vos logiciels au monde physique (Capteurs, Bluetooth)." />
-            <ServiceCard index={6} icon={Zap} title="Performance Audit" desc="Optimisation radicale de la vitesse pour le SEO Google et l'expérience utilisateur." />
+            <ServiceCard index={1} icon={Smartphone} title={servicesT('serv_1_title')} desc={servicesT('serv_1_desc')} />
+            <ServiceCard index={2} icon={Brain} title={servicesT('serv_2_title')} desc={servicesT('serv_2_desc')} />
+            <ServiceCard index={3} icon={Globe} title={servicesT('serv_3_title')} desc={servicesT('serv_3_desc')} />
+            <ServiceCard index={4} icon={Layers} title={servicesT('serv_4_title')} desc={servicesT('serv_4_desc')} />
+            <ServiceCard index={5} icon={Cpu} title={servicesT('serv_5_title')} desc={servicesT('serv_5_desc')} />
+            <ServiceCard index={6} icon={Zap} title={servicesT('serv_6_title')} desc={servicesT('serv_6_desc')} />
         </div>
       </section>
 
@@ -242,36 +247,29 @@ export default function Home() {
       <section className="relative z-10 py-20 bg-white/[0.02] border-y border-white/5">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
-                {/* PARALLAXE AJOUTÉ ICI */}
                 <HorizontalParallax direction={1} speed={40}>
-                  <h2 className="text-2xl md:text-4xl font-black text-white mb-4">AU-DELÀ DU CODE</h2>
+                  <h2 className="text-2xl md:text-4xl font-black text-white mb-4">{t('impact_title')}</h2>
                 </HorizontalParallax>
                 <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto">
-                    La technologie n&apos;est qu&apos;un outil. Notre véritable métier est de générer de la croissance pour votre entreprise.
+                    {t('impact_desc')}
                 </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
                 <div className="p-6">
                     <TrendingUp size={40} className="text-cyan-400 mb-6 mx-auto md:mx-0" />
-                    <h3 className="text-xl font-bold text-white mb-3">VITESSE = REVENUS</h3>
-                    <p className="text-gray-400 text-sm">
-                        Amazon a prouvé que 100ms de latence coûte 1% de ventes. Nous optimisons chaque milliseconde pour maximiser votre conversion.
-                    </p>
+                    <h3 className="text-xl font-bold text-white mb-3">{t('imp_1_title')}</h3>
+                    <p className="text-gray-400 text-sm">{t('imp_1_desc')}</p>
                 </div>
                 <div className="p-6">
                     <ShieldCheck size={40} className="text-cyan-400 mb-6 mx-auto md:mx-0" />
-                    <h3 className="text-xl font-bold text-white mb-3">FIABILITÉ ABSOLUE</h3>
-                    <p className="text-gray-400 text-sm">
-                        Pas de bugs critiques, pas de maintenance chaotique. Nous livrons des systèmes testés, sécurisés et prêts à scaler.
-                    </p>
+                    <h3 className="text-xl font-bold text-white mb-3">{t('imp_2_title')}</h3>
+                    <p className="text-gray-400 text-sm">{t('imp_2_desc')}</p>
                 </div>
                 <div className="p-6">
                     <Clock size={40} className="text-cyan-400 mb-6 mx-auto md:mx-0" />
-                    <h3 className="text-xl font-bold text-white mb-3">TIME-TO-MARKET</h3>
-                    <p className="text-gray-400 text-sm">
-                        Le marché n&apos;attend pas. Grâce à notre stack technique moderne, nous déployons vos MVP deux fois plus vite qu&apos;une agence classique.
-                    </p>
+                    <h3 className="text-xl font-bold text-white mb-3">{t('imp_3_title')}</h3>
+                    <p className="text-gray-400 text-sm">{t('imp_3_desc')}</p>
                 </div>
             </div>
         </div>
@@ -281,11 +279,10 @@ export default function Home() {
       <section className="relative z-10 py-20 overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 md:px-6 text-center mb-12">
              <HorizontalParallax direction={1} speed={30}>
-                <h2 className="text-cyan-500 text-[10px] md:text-xs font-bold tracking-[0.3em] md:tracking-[0.5em] mb-4">CORE SYSTEM</h2>
+                <h2 className="text-cyan-500 text-[10px] md:text-xs font-bold tracking-[0.3em] md:tracking-[0.5em] mb-4">{t('monitor_sub')}</h2>
             </HorizontalParallax>
-            {/* PARALLAXE AJOUTÉ ICI */}
             <HorizontalParallax direction={-1} speed={50}>
-              <h3 className="text-3xl md:text-5xl font-black text-white">CONTRÔLE EN <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">TEMPS RÉEL</span></h3>
+              <h3 className="text-3xl md:text-5xl font-black text-white">{t('monitor_title_1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">{t('monitor_title_2')}</span></h3>
             </HorizontalParallax>
           </div>
           <div className="px-4 md:px-0">
@@ -299,12 +296,11 @@ export default function Home() {
           <div className="mb-16 md:mb-20">
             <HorizontalParallax direction={-1} speed={20}>
                 <h2 className="text-cyan-500 font-mono text-xs tracking-widest mb-4 flex items-center gap-2">
-                    <Database size={14} /> BASE DE CONNAISSANCES
+                    <Database size={14} /> {t('intel_sub')}
                 </h2>
             </HorizontalParallax>
-            {/* PARALLAXE AJOUTÉ ICI */}
             <HorizontalParallax direction={1} speed={60}>
-              <h3 className="text-3xl md:text-6xl font-black text-white">INTELLIGENCE <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">STRATÉGIQUE</span></h3>
+              <h3 className="text-3xl md:text-6xl font-black text-white">{t('intel_title_1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">{t('intel_title_2')}</span></h3>
             </HorizontalParallax>
           </div>
 
@@ -314,11 +310,9 @@ export default function Home() {
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                     <FileText size={60} />
                 </div>
-                <div className="text-[10px] font-mono text-purple-500 mb-4 tracking-widest">FILE_001 // SEO_CORE</div>
-                <h4 className="text-xl font-bold text-white mb-4 group-hover:text-purple-400 transition-colors">L&apos;HYPER-PERFORMANCE SEO</h4>
-                <p className="text-gray-400 text-sm leading-relaxed text-justify">
-                  Dans l&apos;algorithme de Google, la vitesse n&apos;est pas une option, c&apos;est une loi. Nous développons des sites <strong>Next.js</strong> optimisés pour les <strong>Core Web Vitals</strong>. Chaque milliseconde gagnée est une victoire sur vos concurrents. Notre code est minifié, nos images compressées (WebP) et notre architecture pensée pour le <strong>référencement naturel (SEO)</strong> maximal.
-                </p>
+                <div className="text-[10px] font-mono text-purple-500 mb-4 tracking-widest">{t('art_1_tag')}</div>
+                <h4 className="text-xl font-bold text-white mb-4 group-hover:text-purple-400 transition-colors">{t('art_1_title')}</h4>
+                <p className="text-gray-400 text-sm leading-relaxed text-justify">{t('art_1_desc')}</p>
              </div>
 
              {/* Article 2 */}
@@ -326,11 +320,9 @@ export default function Home() {
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                     <SmartphoneCharging size={60} />
                 </div>
-                <div className="text-[10px] font-mono text-cyan-500 mb-4 tracking-widest">FILE_002 // MOBILE_OPS</div>
-                <h4 className="text-xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors">DOMINATION MOBILE</h4>
-                <p className="text-gray-400 text-sm leading-relaxed text-justify">
-                  L&apos;utilisateur moderne est mobile. Nous forgeons des <strong>applications mobiles React Native</strong> qui offrent une expérience native fluide (60 FPS) sur iOS et Android. Pas de compromis : accès caméra, géolocalisation, notifications push. Votre entreprise reste dans la poche de vos clients, accessible en un clic.
-                </p>
+                <div className="text-[10px] font-mono text-cyan-500 mb-4 tracking-widest">{t('art_2_tag')}</div>
+                <h4 className="text-xl font-bold text-white mb-4 group-hover:text-cyan-400 transition-colors">{t('art_2_title')}</h4>
+                <p className="text-gray-400 text-sm leading-relaxed text-justify">{t('art_2_desc')}</p>
              </div>
 
              {/* Article 3 */}
@@ -338,11 +330,9 @@ export default function Home() {
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                     <Globe size={60} />
                 </div>
-                <div className="text-[10px] font-mono text-green-500 mb-4 tracking-widest">FILE_003 // WEB_3.0</div>
-                <h4 className="text-xl font-bold text-white mb-4 group-hover:text-green-400 transition-colors">IMMERSION WEB 3.0</h4>
-                <p className="text-gray-400 text-sm leading-relaxed text-justify">
-                  Le web statique est mort. L&apos;avenir est à l&apos;interactivité. En intégrant <strong>Three.js et WebGL</strong>, nous transformons votre site vitrine en une expérience mémorable. Un visiteur captivé est un visiteur qui convertit. Nous créons des interfaces qui racontent votre histoire par le mouvement et la profondeur.
-                </p>
+                <div className="text-[10px] font-mono text-green-500 mb-4 tracking-widest">{t('art_3_tag')}</div>
+                <h4 className="text-xl font-bold text-white mb-4 group-hover:text-green-400 transition-colors">{t('art_3_title')}</h4>
+                <p className="text-gray-400 text-sm leading-relaxed text-justify">{t('art_3_desc')}</p>
              </div>
           </div>
         </div>
@@ -353,17 +343,17 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12 md:mb-20">
             <HorizontalParallax direction={-1} speed={60}>
-              <h2 className="text-2xl md:text-5xl font-black mb-4 md:mb-6">NOTRE MÉTHODOLOGIE</h2>
+              <h2 className="text-2xl md:text-5xl font-black mb-4 md:mb-6">{t('method_title')}</h2>
             </HorizontalParallax>
             <p className="text-sm md:text-base text-gray-400 max-w-2xl mx-auto">
-              Pas de place pour le hasard. Nous appliquons un processus d&apos;ingénierie rigoureux pour garantir le succès.
+              {t('method_desc')}
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            <StepCard number="01" title="AUDIT & VISION" desc="Nous disséquons votre besoin pour construire une stratégie technique infaillible." icon={Search} />
-            <StepCard number="02" title="ARCHITECTURE" desc="Design système robuste et UX/UI centrée sur la conversion et l&apos;émotion." icon={PenTool} />
-            <StepCard number="03" title="DÉVELOPPEMENT" desc="Code propre, testé et optimisé. Sprints agiles et livraisons régulières." icon={Code} />
-            <StepCard number="04" title="DÉPLOIEMENT" desc="Mise en production, monitoring et maintenance proactive." icon={Rocket} />
+            <StepCard number="01" title={methodeT('step_1_title')} desc={methodeT('step_1_desc')} icon={Search} />
+            <StepCard number="02" title={methodeT('step_2_title')} desc={methodeT('step_2_desc')} icon={PenTool} />
+            <StepCard number="03" title={methodeT('step_3_title')} desc={methodeT('step_3_desc')} icon={Code} />
+            <StepCard number="04" title={methodeT('step_4_title')} desc={methodeT('step_4_desc')} icon={Rocket} />
           </div>
         </div>
       </section>
@@ -376,16 +366,14 @@ export default function Home() {
                     <HorizontalParallax direction={-1} speed={30}>
                         <div className="flex items-center gap-3 mb-6">
                             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                            <span className="text-green-400 font-mono text-[10px] md:text-xs font-bold">PROJET SIGNATURE</span>
+                            <span className="text-green-400 font-mono text-[10px] md:text-xs font-bold">{t('nexus_badge')}</span>
                         </div>
                     </HorizontalParallax>
                     <HorizontalParallax direction={1} speed={80}>
-                        <h2 className="text-4xl md:text-7xl font-black mb-6 md:mb-8 leading-none text-white">NEXUS <br/> <span className="text-cyan-500">AI FIT</span></h2>
+                        <h2 className="text-4xl md:text-7xl font-black mb-6 md:mb-8 leading-none text-white">{t('nexus_title_1')} <br/> <span className="text-cyan-500">{t('nexus_title_2')}</span></h2>
                     </HorizontalParallax>
                     <p className="text-base md:text-xl text-gray-300 leading-relaxed mb-8">
-                        L&apos;application de fitness ultime. Fusionnant Bio-Tracking, Intelligence Artificielle et Design Système.
-                        <br/><br/>
-                        La preuve vivante de notre capacité à délivrer des produits complexes et grand public.
+                        {t('nexus_desc')}
                     </p>
                     <div className="flex flex-wrap gap-2 md:gap-4">
                         <div className="px-3 py-1 md:px-4 md:py-2 bg-white/5 rounded border border-white/10 text-[10px] md:text-xs font-bold text-gray-400">REACT NATIVE</div>
@@ -410,14 +398,14 @@ export default function Home() {
       <section id="contact" className="relative z-10 py-20 md:py-40 px-6 text-center overflow-hidden">
         <div className="max-w-4xl mx-auto">
             <HorizontalParallax direction={1} speed={100}>
-                <h2 className="text-4xl md:text-8xl font-black mb-6 md:mb-8 text-white tracking-tighter leading-none">PRÊT À CODER <br/> <span className="text-cyan-500">L&apos;AVENIR ?</span></h2>
+                <h2 className="text-4xl md:text-8xl font-black mb-6 md:mb-8 text-white tracking-tighter leading-none">{t('contact_title_1')} <br/> <span className="text-cyan-500">{t('contact_title_2')}</span></h2>
             </HorizontalParallax>
             <p className="text-gray-400 mb-8 md:mb-12 text-base md:text-xl leading-relaxed max-w-2xl mx-auto px-4 mt-4">
-                Ne laissez pas vos idées rester des idées. Discutons de votre projet et créons quelque chose d&apos;exceptionnel.
+                {t('contact_desc')}
             </p>
             <Link href="/contact" className="group inline-flex items-center gap-3 md:gap-4 px-8 py-4 md:px-12 md:py-6 bg-white text-black font-black text-sm md:text-lg tracking-widest rounded-full hover:bg-cyan-400 transition-all shadow-[0_0_50px_rgba(255,255,255,0.3)]">
                 <Mail size={20} className="group-hover:scale-110 transition-transform" />
-                DÉMARRER LA MISSION
+                {t('contact_btn')}
             </Link>
         </div>
       </section>
