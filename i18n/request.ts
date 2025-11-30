@@ -11,6 +11,6 @@ export default getRequestConfig(async ({ requestLocale }) => {
   return {
     locale,
     // On remonte d'un dossier (../) pour trouver le dossier "messages"
-    messages: (await import(`../../messages/${locale}.json`)).default
+    messages: (await import(`../messages/${locale}.json`)).default
   };
 });

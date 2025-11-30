@@ -4,7 +4,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import Navbar from "@/app/components/ui/Navbar";
 import Footer from "@/app/components/ui/Footer";
-import "../globals.css"; // <--- CORRECTION ICI (2 points seulement)
+import "../globals.css";
 
 export const metadata: Metadata = {
   title: "MazouzWS - Digital Forge",
@@ -23,22 +23,25 @@ export default async function LocaleLayout({
   params
 }: {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: string }; // On simplifie le type params pour la compatibilité
 }) {
-  const { locale } = await params;
+  const { locale } = params;
 
-  // Vérification : si la langue n'est pas supportée, on renvoie une 404
+  // 1. Vérification de la langue
   if (!['fr', 'en', 'ar'].includes(locale)) {
     notFound();
   }
 
-  const messages = await getMessages();
+  // 2. Chargement des messages pour la langue
+  const messages = await getMessages({ locale }); 
+
+  // 3. Détection de la direction (RTL pour l'arabe)
   const direction = locale === 'ar' ? 'rtl' : 'ltr';
 
   return (
     <html lang={locale} dir={direction}>
       <body className="bg-black text-white antialiased overflow-x-hidden">
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages} locale={locale}>
           <Navbar />
           {children}
           <Footer />
