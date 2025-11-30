@@ -2,53 +2,51 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl'; // <--- 1. IMPORTER LE HOOK
+import { useTranslations, useLocale } from 'next-intl'; // Import useLocale
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import LanguageSwitcher from './LanguageSwitcher'; // Votre nouveau composant
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Navbar() {
-  const t = useTranslations('Navigation'); // <--- 2. CHARGER LES TRADUCTIONS "Navigation"
+  const t = useTranslations('Navigation');
+  const locale = useLocale(); // On récupère la langue actuelle (fr, en, ou ar)
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
+
+  // Fonction utilitaire pour générer les liens avec la locale
+  const getLink = (path: string) => `/${locale}${path}`;
 
   return (
     <>
       <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center backdrop-blur-md border-b border-white/5 bg-black/20 transition-all duration-300">
         
         {/* LOGO */}
-        <Link href="/" className="flex items-center gap-2 group cursor-pointer z-50" onClick={closeMenu}>
+        <Link href={getLink('/')} className="flex items-center gap-2 group cursor-pointer z-50" onClick={closeMenu}>
           <div className="w-3 h-3 bg-cyan-500 rounded-full animate-pulse shadow-[0_0_15px_#00f3ff] group-hover:scale-125 transition-transform" />
           <span className="text-xl font-black tracking-[0.2em] text-white">
             MAZOUZ<span className="text-cyan-400 group-hover:text-white transition-colors">WS</span>
           </span>
         </Link>
 
-        {/* MENU DESKTOP - TEXTE DYNAMIQUE */}
+        {/* MENU DESKTOP */}
         <div className="hidden md:flex gap-6 text-xs font-bold tracking-widest text-gray-400">
-          <Link href="/agence" className="hover:text-cyan-400 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-400 hover:after:w-full after:transition-all">
-            {t('agence')} {/* <--- REMPLACEMENT DU TEXTE DUR PAR LA CLÉ */}
-          </Link>
-          <Link href="/services" className="hover:text-cyan-400 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-400 hover:after:w-full after:transition-all">
-            {t('services')}
-          </Link>
-          <Link href="/offres" className="hover:text-cyan-400 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-400 hover:after:w-full after:transition-all">
-            {t('offres')}
-          </Link>
-          <Link href="/methode" className="hover:text-cyan-400 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-400 hover:after:w-full after:transition-all">
-            {t('methode')}
-          </Link>
-          <Link href="/portfolio" className="hover:text-cyan-400 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-400 hover:after:w-full after:transition-all">
-            {t('portfolio')}
-          </Link>
+          {['agence', 'services', 'offres', 'methode', 'portfolio'].map((item) => (
+            <Link 
+              key={item} 
+              href={getLink(`/${item}`)} 
+              className="hover:text-cyan-400 transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-cyan-400 hover:after:w-full after:transition-all"
+            >
+              {t(item)}
+            </Link>
+          ))}
         </div>
 
         {/* ACTIONS DESKTOP */}
         <div className="hidden md:flex items-center gap-4">
           <LanguageSwitcher />
-          <Link href="/contact" className="px-6 py-2 border border-white/20 rounded-full text-xs font-bold hover:bg-white hover:text-black transition-all bg-black/50 backdrop-blur-sm hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+          <Link href={getLink('/contact')} className="px-6 py-2 border border-white/20 rounded-full text-xs font-bold hover:bg-white hover:text-black transition-all bg-black/50 backdrop-blur-sm hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
             {t('contact')}
           </Link>
         </div>
@@ -70,21 +68,11 @@ export default function Navbar() {
             className="fixed inset-0 z-40 bg-black/95 backdrop-blur-2xl flex flex-col items-center justify-center md:hidden"
           >
             <div className="flex flex-col gap-8 text-center">
-              <Link href="/agence" onClick={closeMenu} className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest">
-                {t('agence')}
-              </Link>
-              <Link href="/services" onClick={closeMenu} className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest">
-                {t('services')}
-              </Link>
-              <Link href="/offres" onClick={closeMenu} className="text-3xl font-black text-cyan-400 hover:text-white transition-colors tracking-widest">
-                {t('offres')}
-              </Link>
-              <Link href="/methode" onClick={closeMenu} className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest">
-                {t('methode')}
-              </Link>
-              <Link href="/portfolio" onClick={closeMenu} className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest">
-                {t('portfolio')}
-              </Link>
+              {['agence', 'services', 'offres', 'methode', 'portfolio'].map((item) => (
+                <Link key={item} href={getLink(`/${item}`)} onClick={closeMenu} className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest">
+                  {t(item)}
+                </Link>
+              ))}
               
               <div className="w-10 h-[1px] bg-white/20 mx-auto my-4"></div>
 
@@ -93,7 +81,7 @@ export default function Navbar() {
                   <LanguageSwitcher />
               </div>
 
-              <Link href="/contact" onClick={closeMenu} className="px-10 py-4 border border-cyan-500/50 bg-cyan-500/10 rounded-full text-xl font-bold text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all">
+              <Link href={getLink('/contact')} onClick={closeMenu} className="px-10 py-4 border border-cyan-500/50 bg-cyan-500/10 rounded-full text-xl font-bold text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all">
                 {t('contact')}
               </Link>
             </div>

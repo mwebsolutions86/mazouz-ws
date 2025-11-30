@@ -6,9 +6,12 @@ import { HorizontalParallax } from '@/app/components/ui/Parallax';
 import { Smartphone, Brain, Globe, Layers, Cpu, Zap, Plus, Scan, TrendingUp, ShieldCheck, Users, Lightbulb, Target, Rocket, AlertTriangle, Lock, ArrowRight } from 'lucide-react';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl'; // Import useLocale
 
-// --- TYPE DEFINITIONS ---
+// ... (Gardez le code de ServiceType et SpotlightCard inchangé pour gagner de la place, ou copiez l'ancien) ...
+// Si vous copiez-collez tout, assurez-vous de réinclure les composants SpotlightCard ici.
+// Pour être sûr, je vous remets le composant SpotlightCard ci-dessous :
+
 interface ServiceType {
   id: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,7 +21,6 @@ interface ServiceType {
   specs: string[];
 }
 
-// --- COMPOSANT CARTE "SPOTLIGHT" ---
 function SpotlightCard({ service, index }: { service: ServiceType, index: number }) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -82,85 +84,34 @@ function SpotlightCard({ service, index }: { service: ServiceType, index: number
 
 export default function ServicesPage() {
   const t = useTranslations('ServicesPage');
+  const locale = useLocale(); // Récupère la langue active (ex: 'ar')
 
-  // --- DONNÉES TECHNIQUES ---
   const services: ServiceType[] = [
-    {
-      id: "01",
-      icon: Smartphone,
-      title: t('serv_1_title'),
-      description: t('serv_1_desc'),
-      specs: ["iOS & Android", "Biométrie", "Temps Réel"]
-    },
-    {
-      id: "02",
-      icon: Brain,
-      title: t('serv_2_title'),
-      description: t('serv_2_desc'),
-      specs: ["RAG Systems", "Chatbots", "Analyse Data"]
-    },
-    {
-      id: "03",
-      icon: Globe,
-      title: t('serv_3_title'),
-      description: t('serv_3_desc'),
-      specs: ["WebGL / 3D", "Shaders", "Performance"]
-    },
-    {
-      id: "04",
-      icon: Layers,
-      title: t('serv_4_title'),
-      description: t('serv_4_desc'),
-      specs: ["Cloud Native", "Microservices", "Sécurité"]
-    },
-    {
-      id: "05",
-      icon: Cpu,
-      title: t('serv_5_title'),
-      description: t('serv_5_desc'),
-      specs: ["Bluetooth", "MQTT", "Embedded"]
-    },
-    {
-      id: "06",
-      icon: Zap,
-      title: t('serv_6_title'),
-      description: t('serv_6_desc'),
-      specs: ["SEO Technique", "Core Vitals", "Speed"]
-    }
+    { id: "01", icon: Smartphone, title: t('serv_1_title'), description: t('serv_1_desc'), specs: ["iOS & Android", "Biométrie", "Temps Réel"] },
+    { id: "02", icon: Brain, title: t('serv_2_title'), description: t('serv_2_desc'), specs: ["RAG Systems", "Chatbots", "Analyse Data"] },
+    { id: "03", icon: Globe, title: t('serv_3_title'), description: t('serv_3_desc'), specs: ["WebGL / 3D", "Shaders", "Performance"] },
+    { id: "04", icon: Layers, title: t('serv_4_title'), description: t('serv_4_desc'), specs: ["Cloud Native", "Microservices", "Sécurité"] },
+    { id: "05", icon: Cpu, title: t('serv_5_title'), description: t('serv_5_desc'), specs: ["Bluetooth", "MQTT", "Embedded"] },
+    { id: "06", icon: Zap, title: t('serv_6_title'), description: t('serv_6_desc'), specs: ["SEO Technique", "Core Vitals", "Speed"] }
   ];
 
-  // --- DONNÉES BUSINESS ---
   const businessImpacts = [
-    {
-      title: t('imp_1_title'),
-      desc: t('imp_1_desc'),
-      icon: Target
-    },
-    {
-      title: t('imp_2_title'),
-      desc: t('imp_2_desc'),
-      icon: TrendingUp
-    },
-    {
-      title: t('imp_3_title'),
-      desc: t('imp_3_desc'),
-      icon: Lightbulb
-    }
+    { title: t('imp_1_title'), desc: t('imp_1_desc'), icon: Target },
+    { title: t('imp_2_title'), desc: t('imp_2_desc'), icon: TrendingUp },
+    { title: t('imp_3_title'), desc: t('imp_3_desc'), icon: Lightbulb }
   ];
 
   return (
     <div className="relative min-h-screen bg-[#050505] text-white pt-28 md:pt-32 px-4 md:px-6 overflow-x-hidden selection:bg-cyan-500 selection:text-black">
       <Background3D />
-      
       <div className="max-w-7xl mx-auto relative z-10 pb-20">
         
-        {/* HEADER CORRIGÉ POUR MOBILE */}
+        {/* HEADER */}
         <div className="mb-12 md:mb-20 border-b border-white/10 pb-8 md:pb-10 text-center md:text-left">
             <HorizontalParallax direction={-1} speed={30}>
                 <h2 className="text-cyan-500 text-[10px] md:text-xs font-bold tracking-[0.3em] md:tracking-[0.5em] mb-4 md:mb-4">{t('subtitle')}</h2>
             </HorizontalParallax>
-            
-            <HorizontalParallax direction={1} speed={40}> {/* Vitesse réduite */}
+            <HorizontalParallax direction={1} speed={40}>
                 <h1 className="text-4xl sm:text-5xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500 leading-none flex flex-col md:block items-center md:items-start gap-2 md:gap-0">
                     <span>{t('title_1')}</span>
                     <span className="text-white md:ml-4">{t('title_2')}</span>
@@ -168,7 +119,7 @@ export default function ServicesPage() {
             </HorizontalParallax>
         </div>
 
-        {/* GRILLE TECHNIQUE (EXPERTS) */}
+        {/* GRILLE TECHNIQUE */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
            {services.map((service, index) => (
              <div key={index} className="h-[400px]">
@@ -177,7 +128,7 @@ export default function ServicesPage() {
            ))}
         </div>
 
-        {/* --- CTA 1 : DIAGNOSTIC SYSTEM (Urgence) --- */}
+        {/* CTA 1 */}
         <div className="mb-32">
             <div className="relative overflow-hidden rounded-2xl border border-red-500/20 bg-gradient-to-r from-red-950/20 to-black p-8 md:p-12 group">
                 <div className="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-40 transition-opacity">
@@ -189,27 +140,20 @@ export default function ServicesPage() {
                             <div className="w-3 h-3 bg-red-500 rounded-full animate-ping" />
                             <h3 className="text-red-400 font-mono text-xs font-bold tracking-widest">{t('diag_alert')}</h3>
                         </div>
-                        
                         <HorizontalParallax direction={1} speed={30}>
                             <h2 className="text-2xl md:text-4xl font-black text-white mb-4">{t('diag_title')}</h2>
                         </HorizontalParallax>
-                        
-                        <p className="text-gray-400 leading-relaxed text-sm md:text-base">
-                            {t('diag_desc')}
-                        </p>
+                        <p className="text-gray-400 leading-relaxed text-sm md:text-base">{t('diag_desc')}</p>
                     </div>
-                    <Link 
-                        href="/contact"
-                        className="whitespace-nowrap px-8 py-4 bg-red-600/10 border border-red-500/50 text-red-400 font-bold rounded-xl hover:bg-red-600 hover:text-white transition-all flex items-center gap-3 text-sm md:text-base"
-                    >
-                        <Scan size={20} />
-                        {t('diag_btn')}
+                    {/* CORRECTION DU LIEN : on ajoute /{locale} */}
+                    <Link href={`/${locale}/contact`} className="whitespace-nowrap px-8 py-4 bg-red-600/10 border border-red-500/50 text-red-400 font-bold rounded-xl hover:bg-red-600 hover:text-white transition-all flex items-center gap-3 text-sm md:text-base">
+                        <Scan size={20} /> {t('diag_btn')}
                     </Link>
                 </div>
             </div>
         </div>
 
-        {/* --- NOUVELLE SECTION 1 : TRADUCTION BUSINESS --- */}
+        {/* SECTION IMPACT */}
         <div className="mb-32">
             <div className="text-center mb-16">
                 <HorizontalParallax direction={1} speed={40}>
@@ -217,17 +161,9 @@ export default function ServicesPage() {
                 </HorizontalParallax>
                 <p className="text-gray-400 max-w-2xl mx-auto">{t('impact_sub')}</p>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {businessImpacts.map((impact, idx) => (
-                    <motion.div 
-                        key={idx}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: idx * 0.2 }}
-                        className="bg-white/[0.02] border border-white/10 p-8 rounded-3xl hover:bg-white/[0.05] transition-all"
-                    >
+                    <motion.div key={idx} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.2 }} className="bg-white/[0.02] border border-white/10 p-8 rounded-3xl hover:bg-white/[0.05] transition-all">
                         <div className="w-14 h-14 bg-cyan-900/20 border border-cyan-500/30 rounded-2xl flex items-center justify-center mb-6">
                             <impact.icon size={28} className="text-cyan-400" />
                         </div>
@@ -238,7 +174,7 @@ export default function ServicesPage() {
             </div>
         </div>
 
-        {/* --- CTA 2 : VISIONARY (Ambition) --- */}
+        {/* CTA 2 : VISIONARY */}
         <div className="mb-32 relative overflow-hidden rounded-3xl border border-white/10 bg-black text-center p-12 md:p-20">
             <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(6,182,212,0.05)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%,100%_100%] animate-[shine_4s_linear_infinite]" />
             <div className="relative z-10 max-w-3xl mx-auto">
@@ -246,27 +182,18 @@ export default function ServicesPage() {
                     <Lock size={12} className="text-cyan-400" />
                     <span className="text-[10px] font-bold text-cyan-300 tracking-widest">{t('vis_badge')}</span>
                 </div>
-                
                 <HorizontalParallax direction={-1} speed={30}>
-                    <h2 className="text-3xl md:text-6xl font-black text-white mb-8 leading-tight">
-                        {t('vis_title')}
-                    </h2>
+                    <h2 className="text-3xl md:text-6xl font-black text-white mb-8 leading-tight">{t('vis_title')}</h2>
                 </HorizontalParallax>
-                
-                <p className="text-gray-400 text-lg mb-10">
-                    {t('vis_desc')}
-                </p>
-                <Link 
-                    href="/contact"
-                    className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-black rounded-full hover:bg-cyan-400 transition-all hover:scale-105"
-                >
+                <p className="text-gray-400 text-lg mb-10">{t('vis_desc')}</p>
+                {/* CORRECTION LIEN */}
+                <Link href={`/${locale}/contact`} className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-black rounded-full hover:bg-cyan-400 transition-all hover:scale-105">
                     {t('vis_btn')} <ArrowRight size={20} />
                 </Link>
             </div>
         </div>
 
-        {/* --- NOUVELLE SECTION 2 : VISION & PARTENARIAT --- */}
-        {/* ... (Cette section n'avait pas de clés explicites dans le JSON, je la laisse simplifiée ou je garde les textes génériques si besoin) ... */}
+        {/* --- SECTION VISION & PARTENARIAT (Corrigée et Traduite) --- */}
         <div className="mb-32 relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gray-900 to-black">
             <div className="absolute top-0 right-0 p-10 opacity-10">
                 <Users size={300} />
@@ -275,30 +202,30 @@ export default function ServicesPage() {
             <div className="relative z-10 p-10 md:p-20 flex flex-col md:flex-row items-center gap-12">
                 <div className="md:w-1/2">
                     <HorizontalParallax direction={1} speed={30}>
-                        <h2 className="text-3xl md:text-5xl font-black text-white mb-6">PAS DE JARGON.<br/>JUSTE DES RÉSULTATS.</h2>
+                        <h2 className="text-3xl md:text-5xl font-black text-white mb-6 whitespace-pre-line">{t('vision_title')}</h2>
                     </HorizontalParallax>
                     
                     <div className="h-1 w-20 bg-cyan-500 mb-8 rounded-full"></div>
-                    <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                        Nous savons que vous ne cherchez pas du &quot;code&quot;, vous cherchez une solution. 
+                    <p className="text-gray-300 text-lg leading-relaxed mb-6 font-bold">
+                        {t('vision_subtitle')}
                     </p>
                     <p className="text-gray-400 leading-relaxed">
-                        Nous prenons en charge la complexité technique pour que vous puissiez vous concentrer sur votre métier. Nous devenons votre CTO externalisé, garantissant que votre infrastructure ne sera jamais un frein à votre croissance.
+                        {t('vision_text')}
                     </p>
                 </div>
                 
                 <div className="md:w-1/2 grid grid-cols-1 gap-4">
                     <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10">
                         <ShieldCheck className="text-green-400 shrink-0" />
-                        <span className="font-bold text-white">Garantie &quot;Bug-Free&quot; au lancement</span>
+                        <span className="font-bold text-white">{t('vision_card_1')}</span>
                     </div>
                     <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10">
                         <Rocket className="text-purple-400 shrink-0" />
-                        <span className="font-bold text-white">Déploiement Rapide (4-8 semaines)</span>
+                        <span className="font-bold text-white">{t('vision_card_2')}</span>
                     </div>
                     <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10">
                         <Users className="text-blue-400 shrink-0" />
-                        <span className="font-bold text-white">Support Réactif Direct (Pas de tickets)</span>
+                        <span className="font-bold text-white">{t('vision_card_3')}</span>
                     </div>
                 </div>
             </div>
@@ -306,9 +233,9 @@ export default function ServicesPage() {
 
         {/* CTA FINAL */}
         <div className="mt-20 md:mt-32 text-center">
-            <p className="text-gray-500 mb-4 md:mb-6 font-mono text-xs md:text-sm">VOTRE VISION MÉRITE L&apos;EXCELLENCE</p>
-            <Link href="/contact" className="inline-block px-8 py-4 md:px-12 md:py-6 bg-white text-black font-black text-sm md:text-xl tracking-widest rounded-full hover:bg-cyan-400 hover:scale-105 transition-all shadow-[0_0_50px_rgba(255,255,255,0.2)]">
-                DISCUTER DE MON PROJET
+            {/* CORRECTION LIEN */}
+            <Link href={`/${locale}/contact`} className="inline-block px-8 py-4 md:px-12 md:py-6 bg-white text-black font-black text-sm md:text-xl tracking-widest rounded-full hover:bg-cyan-400 hover:scale-105 transition-all shadow-[0_0_50px_rgba(255,255,255,0.2)]">
+                {t('vision_cta')}
             </Link>
         </div>
 

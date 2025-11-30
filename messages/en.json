@@ -133,7 +133,14 @@
     "vis_badge": "ACCESS LEVEL: VISIONARY",
     "vis_title": "YOU HAVE THE VISION. WE HAVE THE FIREPOWER.",
     "vis_desc": "We are the elite extension of your team.",
-    "vis_btn": "CONFIGURE ALLIANCE"
+    "vis_btn": "CONFIGURE ALLIANCE",
+    "vision_title": "NO JARGON.\nJUST RESULTS.",
+    "vision_subtitle": "We know you aren't looking for \"code\", you're looking for a solution.",
+    "vision_text": "We handle the technical complexity so you can focus on your business. We become your external CTO, ensuring your infrastructure is never a bottleneck to your growth.",
+    "vision_card_1": "\"Bug-Free\" guarantee at launch",
+    "vision_card_2": "Rapid Deployment (4-8 weeks)",
+    "vision_card_3": "Direct Reactive Support (No tickets)",
+    "vision_cta": "DISCUSS MY PROJECT"
   },
   "PortfolioPage": {
     "subtitle": "RECENT DEPLOYMENTS",

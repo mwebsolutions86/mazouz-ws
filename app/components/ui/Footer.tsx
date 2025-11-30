@@ -2,13 +2,17 @@
 
 import Link from 'next/link';
 import { Twitter, Linkedin, Github, ArrowUpRight, CheckCircle2, Mail } from 'lucide-react';
-import { useTranslations } from 'next-intl'; // Importation du hook
-import LanguageSwitcher from './LanguageSwitcher'; // Sélecteur de langue
+import { useTranslations, useLocale } from 'next-intl'; // Import useLocale
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Footer() {
-  const t = useTranslations('Footer'); // Chargement des traductions 'Footer'
-  const nav = useTranslations('Navigation'); // Pour réutiliser les titres du menu
+  const t = useTranslations('Footer');
+  const nav = useTranslations('Navigation');
+  const locale = useLocale(); // Récupération de la locale active
   const currentYear = new Date().getFullYear();
+
+  // Helper pour les liens
+  const getLink = (path: string) => `/${locale}${path}`;
 
   return (
     <footer className="relative z-10 border-t border-white/10 bg-black overflow-hidden pt-20 pb-10">
@@ -17,7 +21,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 mb-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
             
-            {/* COLONNE 1 : IDENTITÉ */}
+            {/* COLONNE 1 */}
             <div className="space-y-6">
                 <div className="flex items-center gap-2 mb-4">
                     <div className="w-3 h-3 bg-cyan-500 rounded-full shadow-[0_0_10px_#00f3ff]" />
@@ -49,23 +53,22 @@ export default function Footer() {
             <div>
                 <h4 className="text-xs font-bold text-white tracking-widest mb-6 border-b border-white/10 pb-2 inline-block">{t('nav_title')}</h4>
                 <ul className="space-y-4 text-sm text-gray-400">
-                    <li><Link href="/agence" className="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" /> {nav('agence')}</Link></li>
-                    <li><Link href="/services" className="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" /> {nav('services')}</Link></li>
-                    <li><Link href="/offres" className="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" /> {nav('offres')}</Link></li>
-                    <li><Link href="/methode" className="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" /> {nav('methode')}</Link></li>
-                    <li><Link href="/portfolio" className="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" /> {nav('portfolio')}</Link></li>
+                    <li><Link href={getLink('/agence')} className="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" /> {nav('agence')}</Link></li>
+                    <li><Link href={getLink('/services')} className="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" /> {nav('services')}</Link></li>
+                    <li><Link href={getLink('/offres')} className="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" /> {nav('offres')}</Link></li>
+                    <li><Link href={getLink('/methode')} className="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" /> {nav('methode')}</Link></li>
+                    <li><Link href={getLink('/portfolio')} className="hover:text-cyan-400 transition-colors flex items-center gap-2 group"><ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" /> {nav('portfolio')}</Link></li>
                 </ul>
             </div>
 
-            {/* COLONNE 3 : LEGAL & LANGUE */}
+            {/* COLONNE 3 : LEGAL */}
             <div>
                 <h4 className="text-xs font-bold text-white tracking-widest mb-6 border-b border-white/10 pb-2 inline-block">{t('legal_social_title')}</h4>
                 <ul className="space-y-4 text-sm text-gray-400">
-                    <li><Link href="/legal" className="hover:text-white transition-colors">{t('legal_mentions')}</Link></li>
-                    <li><Link href="/privacy" className="hover:text-white transition-colors">{t('privacy')}</Link></li>
-                    <li><Link href="/terms" className="hover:text-white transition-colors">{t('terms')}</Link></li>
+                    <li><Link href={getLink('/legal')} className="hover:text-white transition-colors">{t('legal_mentions')}</Link></li>
+                    <li><Link href={getLink('/privacy')} className="hover:text-white transition-colors">{t('privacy')}</Link></li>
+                    <li><Link href={getLink('/terms')} className="hover:text-white transition-colors">{t('terms')}</Link></li>
                     
-                    {/* SÉLECTEUR DE LANGUE AJOUTÉ ICI POUR ACCESSIBILITÉ */}
                     <li className="pt-4">
                         <LanguageSwitcher />
                     </li>
@@ -78,7 +81,7 @@ export default function Footer() {
                 </ul>
             </div>
 
-            {/* COLONNE 4 : STATUS & NEWSLETTER */}
+            {/* COLONNE 4 */}
             <div className="bg-white/[0.02] border border-white/5 p-6 rounded-2xl h-fit">
                 <div className="flex items-center gap-3 mb-6">
                     <div className="relative">
@@ -94,11 +97,7 @@ export default function Footer() {
                 <div className="space-y-4">
                     <p className="text-xs text-gray-400">{t('newsletter')}</p>
                     <div className="flex">
-                        <input 
-                            type="email" 
-                            placeholder={t('email_placeholder')} 
-                            className="bg-black border border-white/10 border-r-0 rounded-l-lg px-4 py-2 text-xs text-white w-full focus:outline-none focus:border-cyan-500/50 transition-colors"
-                        />
+                        <input type="email" placeholder={t('email_placeholder')} className="bg-black border border-white/10 border-r-0 rounded-l-lg px-4 py-2 text-xs text-white w-full focus:outline-none focus:border-cyan-500/50 transition-colors" />
                         <button className="bg-white/10 border border-white/10 border-l-0 rounded-r-lg px-3 hover:bg-cyan-500 hover:text-black transition-colors">
                             <Mail size={14} />
                         </button>
@@ -109,7 +108,6 @@ export default function Footer() {
         </div>
     </div>
 
-      {/* COPYRIGHT */}
       <div className="border-t border-white/10 pt-8 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-600 font-mono tracking-widest">
             <p>© {currentYear} MAZOUZ WEB SOLUTIONS SARL. {t('rights')}</p>

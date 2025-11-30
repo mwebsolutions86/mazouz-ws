@@ -133,7 +133,14 @@
     "vis_badge": "ACCESS LEVEL: VISIONARY",
     "vis_title": "VOUS AVEZ LA VISION. NOUS AVONS LA PUISSANCE DE FEU.",
     "vis_desc": "Ne laissez pas des limitations techniques brider votre ambition. Nous sommes l'extension d'élite de votre équipe.",
-    "vis_btn": "CONFIGURER L'ALLIANCE"
+    "vis_btn": "CONFIGURER L'ALLIANCE",
+    "vision_title": "PAS DE JARGON.\nJUSTE DES RÉSULTATS.",
+    "vision_subtitle": "Nous savons que vous ne cherchez pas du \"code\", vous cherchez une solution.",
+    "vision_text": "Nous prenons en charge la complexité technique pour que vous puissiez vous concentrer sur votre métier. Nous devenons votre CTO externalisé, garantissant que votre infrastructure ne sera jamais un frein à votre croissance.",
+    "vision_card_1": "Garantie \"Bug-Free\" au lancement",
+    "vision_card_2": "Déploiement Rapide (4-8 semaines)",
+    "vision_card_3": "Support Réactif Direct (Pas de tickets)",
+    "vision_cta": "DISCUTER DE MON PROJET"
   },
   "OffresPage": {
     "subtitle": "MODÈLES ÉCONOMIQUES",
@@ -283,4 +290,5 @@
     "btn": "RETOUR À LA BASE",
     "code": "ERROR_CODE: 404_NOT_FOUND // PROTOCOL_MISMATCH"
   }
+  
 }
