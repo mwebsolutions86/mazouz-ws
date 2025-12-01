@@ -42,6 +42,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={direction}>
       <body className="bg-black text-white antialiased overflow-x-hidden">
+        suppressHydrationWarning={true}
         <NextIntlClientProvider messages={messages} locale={locale}>
           <Navbar />
           {children}

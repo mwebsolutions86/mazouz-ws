@@ -2,30 +2,47 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useTranslations, useLocale } from 'next-intl'; // Import useLocale
+import Image from 'next/image';
+import { useTranslations, useLocale } from 'next-intl';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import LanguageSwitcher from './LanguageSwitcher';
-import Image from 'next/image';
 
 export default function Navbar() {
   const t = useTranslations('Navigation');
-  const locale = useLocale(); // On récupère la langue actuelle (fr, en, ou ar)
+  const locale = useLocale();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => setIsOpen(false);
 
-  // Fonction utilitaire pour générer les liens avec la locale
+  // Helper pour les liens
   const getLink = (path: string) => `/${locale}${path}`;
+
+  // Liste des liens pour la boucle
+  const navItems = ['agence', 'services', 'offres', 'methode', 'portfolio'];
+
+  // Variantes pour le conteneur du menu
+  const containerVars = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      }
+    },
+    exit: {
+      opacity: 0,
+      transition: { staggerChildren: 0.05, staggerDirection: -1 }
+    }
+  };
 
   return (
     <>
       <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center backdrop-blur-md border-b border-white/5 bg-black/20 transition-all duration-300">
         
-       
-        {/* LOGO */}
-{/* LOGO HEADER : ICÔNE + TEXTE */}
+        {/* LOGO HEADER : ICÔNE + TEXTE */}
         <Link href={getLink('/')} className="flex items-center gap-2 relative z-50 group" onClick={closeMenu}>
           <Image 
             src="/logo.webp" 
@@ -42,7 +59,7 @@ export default function Navbar() {
 
         {/* MENU DESKTOP */}
         <div className="hidden md:flex gap-6 text-xs font-bold tracking-widest text-gray-400">
-          {['agence', 'services', 'offres', 'methode', 'portfolio'].map((item) => (
+          {navItems.map((item) => (
             <Link 
               key={item} 
               href={getLink(`/${item}`)} 
@@ -62,38 +79,94 @@ export default function Navbar() {
         </div>
 
         {/* BOUTON HAMBURGER MOBILE */}
-        <button onClick={toggleMenu} className="md:hidden z-50 text-white p-2 focus:outline-none hover:text-cyan-400 transition-colors">
-          {isOpen ? <X size={32} className="text-cyan-400" /> : <Menu size={32} />}
+        <button 
+            onClick={toggleMenu} 
+            className="md:hidden z-50 text-white p-2 focus:outline-none hover:text-cyan-400 transition-colors relative"
+            aria-label="Toggle menu"
+        >
+            <motion.div
+                animate={{ rotate: isOpen ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+            >
+               {isOpen ? <X size={32} className="text-cyan-400" /> : <Menu size={32} />}
+            </motion.div>
         </button>
       </nav>
 
-      {/* MENU MOBILE OVERLAY */}
+      {/* MENU MOBILE OVERLAY (ANIMÉ) */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", stiffness: 100, damping: 20 }}
-            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-2xl flex flex-col items-center justify-center md:hidden"
+            variants={containerVars}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center md:hidden overflow-hidden"
           >
-            <div className="flex flex-col gap-8 text-center">
-              {['agence', 'services', 'offres', 'methode', 'portfolio'].map((item) => (
-                <Link key={item} href={getLink(`/${item}`)} onClick={closeMenu} className="text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest">
-                  {t(item)}
-                </Link>
-              ))}
+            <div className="flex flex-col gap-8 text-center w-full px-6">
               
-              <div className="w-10 h-[1px] bg-white/20 mx-auto my-4"></div>
+              {/* BOUCLE DES LIENS AVEC ANIMATION ALTERNÉE */}
+              {navItems.map((item, index) => {
+                const initialX = index % 2 === 0 ? 100 : -100;
 
-              {/* SÉLECTEUR LANGUE MOBILE */}
-              <div className="mb-6 scale-125">
+                return (
+                  <motion.div
+                    key={item}
+                    variants={{
+                      hidden: { x: initialX, opacity: 0 },
+                      show: { x: 0, opacity: 1, transition: { type: "spring", stiffness: 50, damping: 20 } },
+                      exit: { opacity: 0, x: initialX }
+                    }}
+                  >
+                    <Link 
+                      href={getLink(`/${item}`)} 
+                      onClick={closeMenu} 
+                      className="block text-3xl font-black text-white hover:text-cyan-400 transition-colors tracking-widest"
+                    >
+                      {t(item)}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+              
+              <motion.div 
+                variants={{
+                   hidden: { scale: 0, opacity: 0 }, 
+                   show: { scale: 1, opacity: 1 },
+                   exit: { opacity: 0 }
+                }}
+                className="w-10 h-[1px] bg-white/20 mx-auto my-4"
+              />
+
+              {/* SÉLECTEUR LANGUE : CENTRÉ */}
+              <motion.div 
+                className="mb-6 scale-125 flex justify-center" /* AJOUT DE flex justify-center ICI */
+                variants={{
+                    hidden: { opacity: 0 },
+                    show: { opacity: 1, transition: { duration: 0.8 } },
+                    exit: { opacity: 0 }
+                }}
+              >
                   <LanguageSwitcher />
-              </div>
+              </motion.div>
 
-              <Link href={getLink('/contact')} onClick={closeMenu} className="px-10 py-4 border border-cyan-500/50 bg-cyan-500/10 rounded-full text-xl font-bold text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all">
-                {t('contact')}
-              </Link>
+              {/* BOUTON CONTACT */}
+              <motion.div
+                variants={{
+                    hidden: { y: 100, opacity: 0 },
+                    show: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 60 } },
+                    exit: { y: 100, opacity: 0 }
+                }}
+              >
+                <Link 
+                    href={getLink('/contact')} 
+                    onClick={closeMenu} 
+                    className="inline-block px-10 py-4 border border-cyan-500/50 bg-cyan-500/10 rounded-full text-xl font-bold text-cyan-400 hover:bg-cyan-400 hover:text-black transition-all shadow-[0_0_30px_rgba(6,182,212,0.2)]"
+                >
+                    {t('contact')}
+                </Link>
+              </motion.div>
+
             </div>
           </motion.div>
         )}
