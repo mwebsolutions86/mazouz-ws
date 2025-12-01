@@ -3,19 +3,91 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Background3D from '@/app/components/3d/Background3D';
 import { HorizontalParallax } from '@/app/components/ui/Parallax';
-import { Zap, Trophy, Crosshair, Terminal, Globe, ChevronRight, User, Lock,  } from 'lucide-react';
+import { Zap, Trophy, Crosshair, Terminal, Globe, ChevronRight, User, Lock } from 'lucide-react';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl'; // <--- 1. IMPORT
+import { useTranslations } from 'next-intl';
 
-// ... (Gardez le composant CyberTerminal et SpotlightValueCard inchangés) ...
-// Pour gagner de la place, je ne remets pas tout le code du Terminal ici car il contient du "code"
-// qui peut rester en anglais (c'est stylistique).
+// --- CODE TERMINAL (Décoratif, on peut le laisser en anglais technique) ---
+const codeSnippets = [
+  "> INITIALIZING NEURAL LINK...",
+  "> ACCESSING CORE ARCHITECTURE [V.15.0.2]",
+  "> LOADING MODULE: NEXT.JS... [OK]",
+  "> OPTIMIZING ASSETS... [100%]",
+  "> DEPLOYING TO EDGE NETWORK...",
+  "> SYSTEM CHECK: SECURE",
+  "> RENDER MODE: CONCURRENT",
+  "> HYDRATION: COMPLETE",
+  "> ESTABLISHING SECURE CONNECTION...",
+  "> USER DETECTED: ELITE STATUS",
+  "> EXECUTING: build_future.tsx",
+  "> COMPILING SHADERS...",
+  "> ONE_MAN_ARMY_PROTOCOL: ACTIVE",
+];
 
-// ... (Gardez SpotlightValueCard tel quel) ...
+// --- COMPOSANT TERMINAL ---
+const CyberTerminal = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [lines, setLines] = useState<string[]>([]);
 
-// ATTENTION : Pour SpotlightValueCard, il faut le définir avant le composant page
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setLines(prev => {
+        const newLine = codeSnippets[index % codeSnippets.length];
+        const newLines = [...prev, newLine].slice(-12); 
+        return newLines;
+      });
+      index++;
+    }, 400); 
+
+    return () => clearInterval(interval);
+  }, []); 
+
+  return (
+    <div 
+      ref={containerRef}
+      className="relative w-full h-[450px] bg-black/80 rounded-xl border border-white/10 overflow-hidden font-mono text-xs md:text-sm shadow-2xl group"
+    >
+      <div className="absolute top-0 left-0 w-full h-10 bg-white/5 border-b border-white/10 flex items-center justify-between px-4 z-20">
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full bg-red-500/50" />
+          <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+          <div className="w-3 h-3 rounded-full bg-green-500/50" />
+        </div>
+        <div className="text-gray-500 flex items-center gap-2">
+          <Lock size={12} />
+          <span>MAZOUZ_ROOT_ACCESS</span>
+        </div>
+      </div>
+
+      <div className="absolute inset-0 pt-14 px-6 pb-6 flex flex-col justify-end z-10">
+        <div className="space-y-2 text-green-400/80">
+          {lines.map((line, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="flex items-center gap-2"
+            >
+              <span className="text-cyan-500">➜</span>
+              <span className={line.includes("ERROR") ? "text-red-500" : line.includes("ACTIVE") ? "text-yellow-400 font-bold" : ""}>
+                {line} {i === lines.length - 1 && <span className="animate-pulse">_</span>}
+              </span>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-30 bg-[length:100%_2px,3px_100%] pointer-events-none" />
+      <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute top-0 w-full h-1 bg-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.5)] animate-[scan_4s_linear_infinite] z-40 opacity-50" />
+    </div>
+  );
+};
+
+// --- COMPOSANT CARTE SPOTLIGHT (VALEURS) ---
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function SpotlightValueCard({ value, index }: { value: any, index: number }) {
   const mouseX = useMotionValue(0);
@@ -62,111 +134,56 @@ function SpotlightValueCard({ value, index }: { value: any, index: number }) {
   );
 }
 
-// ... (Code Snippets et Terminal à conserver tel quel ou déplacer en bas) ...
-const codeSnippets = [
-  "> INITIALIZING NEURAL LINK...",
-  "> ACCESSING CORE ARCHITECTURE [V.15.0.2]",
-  "> LOADING MODULE: NEXT.JS... [OK]",
-  "> OPTIMIZING ASSETS... [100%]",
-  "> DEPLOYING TO EDGE NETWORK...",
-  "> SYSTEM CHECK: SECURE",
-  "> RENDER MODE: CONCURRENT",
-  "> HYDRATION: COMPLETE",
-  "> ESTABLISHING SECURE CONNECTION...",
-  "> USER DETECTED: ELITE STATUS",
-  "> EXECUTING: build_future.tsx",
-  "> COMPILING SHADERS...",
-  "> ONE_MAN_ARMY_PROTOCOL: ACTIVE",
-];
-
-const CyberTerminal = () => {
-    // ... (Gardez le code du composant CyberTerminal identique à votre fichier original)
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [lines, setLines] = useState<string[]>([]);
-  
-    useEffect(() => {
-      let index = 0;
-      const interval = setInterval(() => {
-        setLines(prev => {
-          const newLine = codeSnippets[index % codeSnippets.length];
-          const newLines = [...prev, newLine].slice(-12); 
-          return newLines;
-        });
-        index++;
-      }, 400); 
-  
-      return () => clearInterval(interval);
-    }, []); 
-  
-    return (
-      <div 
-        ref={containerRef}
-        className="relative w-full h-[450px] bg-black/80 rounded-xl border border-white/10 overflow-hidden font-mono text-xs md:text-sm shadow-2xl group"
-      >
-        <div className="absolute top-0 left-0 w-full h-10 bg-white/5 border-b border-white/10 flex items-center justify-between px-4 z-20">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-500/50" />
-            <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-            <div className="w-3 h-3 rounded-full bg-green-500/50" />
-          </div>
-          <div className="text-gray-500 flex items-center gap-2">
-            <Lock size={12} />
-            <span>MAZOUZ_ROOT_ACCESS</span>
-          </div>
-        </div>
-  
-        <div className="absolute inset-0 pt-14 px-6 pb-6 flex flex-col justify-end z-10">
-          <div className="space-y-2 text-green-400/80">
-            {lines.map((line, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="flex items-center gap-2"
-              >
-                <span className="text-cyan-500">➜</span>
-                <span className={line.includes("ERROR") ? "text-red-500" : line.includes("ACTIVE") ? "text-yellow-400 font-bold" : ""}>
-                  {line} {i === lines.length - 1 && <span className="animate-pulse">_</span>}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-  
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-30 bg-[length:100%_2px,3px_100%] pointer-events-none" />
-        <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-        <div className="absolute top-0 w-full h-1 bg-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.5)] animate-[scan_4s_linear_infinite] z-40 opacity-50" />
-      </div>
-    );
-};
-
 export default function AgencePage() {
-  const t = useTranslations('AgencePage'); // <--- 2. CHARGEMENT TRADUCTIONS
+  const t = useTranslations('AgencePage');
 
-  // DONNÉES RECONSTRUITES AVEC LES TRADUCTIONS
+  // --- DONNÉES DYNAMIQUES ---
   const history = [
-    { year: "2023", title: t('history_2023_title'), desc: t('history_2023_desc') },
-    { year: "2024", title: t('history_2024_title'), desc: t('history_2024_desc') },
-    { year: "2025", title: t('history_2025_title'), desc: t('history_2025_desc') }
+    { 
+      year: "2023", 
+      title: t('history_2023_title'), 
+      desc: t('history_2023_desc')
+    },
+    { 
+      year: "2024", 
+      title: t('history_2024_title'), 
+      desc: t('history_2024_desc')
+    },
+    { 
+      year: "2025", 
+      title: t('history_2025_title'), 
+      desc: t('history_2025_desc')
+    }
   ];
 
   const values = [
-    { icon: User, title: t('val_1_title'), desc: t('val_1_desc') },
-    { icon: Crosshair, title: t('val_2_title'), desc: t('val_2_desc') },
-    { icon: Zap, title: t('val_3_title'), desc: t('val_3_desc') }
+    {
+      icon: User,
+      title: t('val_1_title'),
+      desc: t('val_1_desc')
+    },
+    {
+      icon: Crosshair,
+      title: t('val_2_title'),
+      desc: t('val_2_desc')
+    },
+    {
+      icon: Zap,
+      title: t('val_3_title'),
+      desc: t('val_3_desc')
+    }
   ];
 
   const team = [
     {
       name: "MOHCINE MAZOUZ",
       role: "FOUNDER / FULL STACK ARCHITECT",
-      bio: t('bio'), // Utilisation de la traduction
+      bio: t('bio'),
       stats: ["CLASS: ONE-MAN ARMY", "WEAPON: FULL STACK", "STATUS: ONLINE"],
       image: "/quantum.webp" 
     }
   ];
 
-  // DONNÉES STACK (Inchangé car c'est du technique universel)
   const stack = ["NEXT.JS", "REACT NATIVE", "TYPESCRIPT", "PYTHON", "RUST", "SUPABASE", "AWS", "WEBGL", "SOLIDITY"];
 
   return (

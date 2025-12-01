@@ -67,7 +67,7 @@
     "rights": "TOUS DROITS RÉSERVÉS.",
     "secure": "SECURE CONNECTION"
   },
-  "AgencePage": {
+"AgencePage": {
     "subtitle": "IDENTITÉ & ORIGINE",
     "title_1": "L'AGENCE",
     "title_2": "MAZOUZ",
@@ -79,10 +79,10 @@
     "logs_title": "DATA LOGS",
     "history_2023_title": "INITIALISATION",
     "history_2023_desc": "Lancement de l'activité. Une conviction : l'avenir appartient aux experts polyvalents capables de fusionner design et ingénierie.",
-    "history_2024_title": "DÉVELOPPEMENT",
-    "history_2024_desc": "Livraison de projets complexes pour des clients exigeants. Perfectionnement de la stack technique pour atteindre des standards d'élite.",
-    "history_2025_title": "MATURITÉ",
-    "history_2025_desc": "MazouzWS devient une référence locale en développement sur-mesure. Une approche 'Boutique Agency' axée sur la qualité.",
+    "history_2024_title": "VEILLE STRATÉGIQUE",
+    "history_2024_desc": "Mise en pause volontaire des opérations commerciales. Une année consacrée à la R&D interne, à la refonte de l'architecture technique et à la montée en compétence sur les technologies de rupture (Next.js 15, IA).",
+    "history_2025_title": "RENAISSANCE (REBOOT)",
+    "history_2025_desc": "Réactivation officielle de l'agence. MazouzWS revient avec une stack technologique d'élite et une vision affinée : fournir l'excellence sans compromis.",
     "dna_title": "MON",
     "dna_subtitle": "ADN",
     "val_1_title": "INTERLOCUTEUR UNIQUE",
