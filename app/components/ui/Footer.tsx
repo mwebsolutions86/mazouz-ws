@@ -48,8 +48,6 @@ export default function Footer() {
                     <p className="text-[10px] font-bold text-gray-400 mb-2 tracking-widest uppercase">{t('legal_title')}</p>
                     <div className="text-[10px] text-gray-400 font-mono space-y-1 leading-tight">
                         <p className="font-bold text-gray-300">STE MAZOUZ WEB SOLUTIONS SARL</p>
-                        <p>{t('address_1')}</p>
-                        <p>{t('address_2')}</p>
                         <p>{t('address_3')}</p>
                         <div className="mt-2 pt-2 border-t border-white/5 flex flex-col gap-1">
                             <span>RC : 55923</span>
