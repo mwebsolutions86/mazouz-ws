@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { Analytics } from '@vercel/analytics/next';
 import Navbar from "@/app/components/ui/Navbar";
 import Footer from "@/app/components/ui/Footer";
 import "../globals.css";
@@ -51,6 +52,7 @@ export default async function LocaleLayout({
         {children}
         <Footer />
     </NextIntlClientProvider>
+    <Analytics />
 </body>
     </html>
   );
